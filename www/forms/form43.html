@@ -2,42 +2,57 @@
 
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="left">
-      <a href="#" class="back link">
-        <i class="icon icon-back"></i>
-        <span>Back</span>
-      </a>
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">{{caption}}</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
     </div>
-    <div class="center sliding">{{caption}}</div>
-    <div class="right">
-      <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-    </div>
-  </div>
 </div>
 
 <div class="pages">
-  <div data-page="form{{id}}" class="page">
+    <div data-page="form{{id}}" class="page">
 
-    <div class="page-content">
-      <h1>form43</h1>
-      <div class="content-block">این فرم هنوز ساخته نشده است. با تغییر فایل مربوطه در شاخه‌ی فرم ها آن را تنظیم کنید</div>
-      <div class="content-block">forms/form{{id}}.html</div>
-      <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
-        <ul>
-          <li>
-            <div class="item-content">
-              <div class="item-media"><i class="icon icon-form-name"></i></div>
-              <div class="item-inner">
-                <div class="item-title label">فیلد۱</div>
-                <div class="item-input">
-                  <input type="text" name="fieldName" placeholder="فیلد تستی">
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </form>
+        <div class="page-content">
+            <div class="content-block">forms/form{{id}}.html</div>
+            <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
+                <ul>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    حمایت‌شدگان بیمه
+                                </div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="net-gsm-before-eq"
+                                           placeholder="تعداد افراد زیر پویش نهادهای حمایتی مثل کمیته امداد و بهزیستی">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon "></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">ارزیابی</div>
+                                <div class="item-input">
+                                    <input type="text" name="gardeshgari-vijegi"
+                                           placeholder="ارزیابی کارشناسی پایشگر از توان اقتصادی اهالی برای بازسازی آبادی">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
