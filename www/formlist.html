@@ -26,7 +26,8 @@
           {{#each this}}
           <li><a href="forms/form{{this.id}}.html" class="item-link item-content" data-context='{ "id": {{this.id}}, "caption": "{{this.caption}}", "visitId": "{{@root.visitId}}" }'>
               <div class="item-inner">
-                <div class="item-title">{{this.caption}} - {{this.formId}}</div>
+                <div class="item-title">{{this.caption}}</div>
+                <div class="item-after">{{this.formId}}</div>
               </div>
           </a></li>
           {{/each}}

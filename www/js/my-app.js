@@ -138,13 +138,16 @@ $$(document).on('deviceready', function () {
 
 })
 
-// TODO: incomplete
 function uploadDataToServer () {
-//for (var visitId = 0; visitId < visitList.length; visitId++)
-    visitId = 0
-    {
-    var reqData = {
-      userId: 'gholi',
+  $$("uploadDataButton").hide()
+
+  var reqData = {
+    items: []
+  }
+
+  for (var visitId = 0; visitId < visitList.length; visitId++) {
+    var visitData = {
+      userId: 'gholi', // TODO: Fill with current user name
       visitId: visitId,
       visitName: visitList[visitId],
       details: {
@@ -158,27 +161,32 @@ function uploadDataToServer () {
         var m = myApp.formGetData(formName)
         if (m !== undefined) {
           console.log('Form: ' + formName + ' -> ' + m)
-          reqData.details[formInfo.formId] = myApp.formGetData(formName)
+          visitData.details[formInfo.formId] = myApp.formGetData(formName)
         }
       })
     })
 
-    console.log('X')
-    $$.ajax({
-      contentType: 'application/json',
-      data: JSON.stringify(reqData),
-      dataType: 'raw',
-      success: function (data) {
-          console.log('Data received : ' + data)
-      },
-      error: function (xmlhttp, err) {
-          console.log('Ajax req failed ' + err)
-      },
-      processData: false,
-      type: 'POST',
-      url: 'http://192.168.1.16/disaster/pushdata.php'
-    })
+    reqData.items.push(visitData)
   }
+
+  $$.ajax({
+    contentType: 'application/json',
+    data: JSON.stringify(reqData),
+    dataType: 'raw',
+    success: function (data) {
+        console.log('Data received : ' + data)
+        $$("uploadDataButton").show()
+        alert('ارسال موفق بود')
+    },
+    error: function (xmlhttp, err) {
+        console.log('Ajax req failed ' + err)
+        alert('متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد')
+        $$("uploadDataButton").show()
+    },
+    processData: false,
+    type: 'POST',
+    url: 'http://rootshell.ir/disaster/pushdata.php'
+  })
 }
 
 myApp.onPageInit('index', function (page) {
