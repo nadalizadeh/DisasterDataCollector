@@ -2,41 +2,53 @@
 
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="left">
-      <a href="#" class="back link">
-        <i class="icon icon-back"></i>
-        <span>Back</span>
-      </a>
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">{{caption}}</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
     </div>
-    <div class="center sliding">{{caption}}</div>
-    <div class="right">
-      <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-    </div>
-  </div>
 </div>
 
 <div class="pages">
-  <div data-page="form{{id}}" class="page">
+    <div data-page="form{{id}}" class="page">
 
-    <div class="page-content">
-      <div class="content-block">این فرم هنوز ساخته نشده است. با تغییر فایل مربوطه در شاخه‌ی فرم ها آن را تنظیم کنید</div>
-      <div class="content-block">forms/form{{id}}.html</div>
-      <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
-        <ul>
-          <li>
-            <div class="item-content">
-              <div class="item-media"><i class="icon icon-form-name"></i></div>
-              <div class="item-inner">
-                <div class="item-title label">فیلد۱</div>
-                <div class="item-input">
-                  <input type="text" name="fieldName" placeholder="فیلد تستی">
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </form>
+        <div class="page-content">
+            <div class="content-block">forms/form{{id}}.html</div>
+            <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon "></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">آداب و رسوم</div>
+                                <div class="item-input">
+                                    <input type="text" name="adab-rosoom" placeholder="گونه‌ی آداب و رسوم ویژه‌ی محل">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon "></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">آسیب‌های وارده</div>
+                                <div class="item-input">
+                                    <input type="text" name="adab-rosoom-asib"
+                                           placeholder="نوع آسیب وارده و امکان تداوم آداب و رسوم ویژه">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
     </div>
-  </div>
 </div>

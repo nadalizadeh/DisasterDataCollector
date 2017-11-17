@@ -2,41 +2,231 @@
 
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="left">
-      <a href="#" class="back link">
-        <i class="icon icon-back"></i>
-        <span>Back</span>
-      </a>
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">{{caption}}</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
     </div>
-    <div class="center sliding">{{caption}}</div>
-    <div class="right">
-      <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-    </div>
-  </div>
 </div>
 
 <div class="pages">
-  <div data-page="form{{id}}" class="page">
+    <div data-page="form{{id}}" class="page">
 
-    <div class="page-content">
-      <div class="content-block">این فرم هنوز ساخته نشده است. با تغییر فایل مربوطه در شاخه‌ی فرم ها آن را تنظیم کنید</div>
-      <div class="content-block">forms/form{{id}}.html</div>
-      <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
-        <ul>
-          <li>
-            <div class="item-content">
-              <div class="item-media"><i class="icon icon-form-name"></i></div>
-              <div class="item-inner">
-                <div class="item-title label">فیلد۱</div>
-                <div class="item-input">
-                  <input type="text" name="fieldName" placeholder="فیلد تستی">
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </form>
+        <div class="page-content">
+            <div class="content-block">forms/form{{id}}.html</div>
+
+            <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> تعداد میراث فرهنگی</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="miras-total"
+                                           placeholder="تعداد سایت‌های ثبت در میراث فرهنگی در شعاع ۵ کیلومتری">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> تعداد مساجد</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="masjed-total" placeholder="تعداد مساجد">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> حسینیه</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="hoseinie-total"
+                                           placeholder="تعداد حسینیه‌ها"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> خانقاه</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="khaneghah-total"
+                                           placeholder="تعداد خانقاه">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> سنگ‌نگاره</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="sang-negare-total"
+                                           placeholder="تعداد سنگ‌نگاره‌ها"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> سایت باستانی</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="bastani-total"
+                                           placeholder="تعداد سایت‌های باستانی"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">تعداد مساجد آسیب دیده</div>
+                                    <div class="item-input">
+                                        <select name="masjed-total-asib">
+                                            <option value="0">0</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                            <option value="60">60</option>
+                                            <option value="70">70</option>
+                                            <option value="80">80</option>
+                                            <option value="90">90</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">تعداد حسینیه آسیب دیده</div>
+                                    <div class="item-input">
+                                        <select name="hoseinie-total-asib">
+                                            <option value="0">0</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                            <option value="60">60</option>
+                                            <option value="70">70</option>
+                                            <option value="80">80</option>
+                                            <option value="90">90</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">تعداد خانقاه‌های آسیب دیده</div>
+                                    <div class="item-input">
+                                        <select name="khaneghah-total-asib">
+                                            <option value="0">0</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                            <option value="60">60</option>
+                                            <option value="70">70</option>
+                                            <option value="80">80</option>
+                                            <option value="90">90</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">تعداد سنگ‌نگاره آسیب دیده</div>
+                                    <div class="item-input">
+                                        <select name="sang-negare-total-asib">
+                                            <option value="0">0</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                            <option value="60">60</option>
+                                            <option value="70">70</option>
+                                            <option value="80">80</option>
+                                            <option value="90">90</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">تعداد سایت باستانی آسیب دیده</div>
+                                    <div class="item-input">
+                                        <select name="site-bastani-total-asib">
+                                            <option value="0">0</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                            <option value="60">60</option>
+                                            <option value="70">70</option>
+                                            <option value="80">80</option>
+                                            <option value="90">90</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </form>
+        </div>
     </div>
-  </div>
 </div>

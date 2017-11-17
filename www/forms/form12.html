@@ -2,41 +2,181 @@
 
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="left">
-      <a href="#" class="back link">
-        <i class="icon icon-back"></i>
-        <span>Back</span>
-      </a>
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">{{caption}}</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
     </div>
-    <div class="center sliding">{{caption}}</div>
-    <div class="right">
-      <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-    </div>
-  </div>
 </div>
 
 <div class="pages">
-  <div data-page="form{{id}}" class="page">
+    <div data-page="form{{id}}" class="page">
 
-    <div class="page-content">
-      <div class="content-block">این فرم هنوز ساخته نشده است. با تغییر فایل مربوطه در شاخه‌ی فرم ها آن را تنظیم کنید</div>
-      <div class="content-block">forms/form{{id}}.html</div>
-      <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
-        <ul>
-          <li>
-            <div class="item-content">
-              <div class="item-media"><i class="icon icon-form-name"></i></div>
-              <div class="item-inner">
-                <div class="item-title label">فیلد۱</div>
-                <div class="item-input">
-                  <input type="text" name="fieldName" placeholder="فیلد تستی">
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </form>
+        <div class="page-content">
+            <div class="content-block">forms/form{{id}}.html</div>
+            <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">جمعیت پیش از زلزله</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="jamiat-before-eq"
+                                           placeholder="جمعیت پیش از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">تعداد مصدوم</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="masdoom-total"
+                                           placeholder="تعداد مصدومین">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> تعداد جانباخته</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="fowt-total"
+                                           placeholder="تعداد جانباخته">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> باقی‌مانده</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-afrad-after-eq"
+                                           placeholder="تعداد افراد باقی‌مانده بعد از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon "></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label"> تاسیسات بهداشت ودرمان مستقر</div>
+                                    <div class="item-input">
+                                        <select name="tajhizat-behdasht-mostaghar" multiple>
+                                            <option value="khane-behdasht"> خانه‌ی بهداشت</option>
+                                            <option value="markaz-behdasht"> مرکز بهداشت</option>
+                                            <option value="gheir-mostaghar"> غیر مستقر</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon "></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> سایر تاسیسات</div>
+                                <div class="item-input">
+                                    <input type="text" name="tajhizat-behdasht-mostaghar-sayer"
+                                           placeholder="سایر تاسیسات بهداشت ودرمان مستقر">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon "></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> تجهیزات پیش از زلزله</div>
+                                <div class="item-input">
+                                    <input type="text" name="tajhizat-behdasht-before-eq"
+                                           placeholder="تجهیزات تاسیسات بهداشت ودرمان پیش از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon "></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> تجهیزات بعد از زلزله</div>
+                                <div class="item-input">
+                                    <input type="text" name="tajhizat-behdasht-after-eq"
+                                           placeholder="تجهیزات تاسیسات بهداشت ودرمان بعد از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon "></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> الگوی فعلی سرویس‌دهی</div>
+                                <div class="item-input">
+                                    <input type="text" name="algo-service-darmani"
+                                           placeholder="الگوی فعلی سرویس‌دهی درمانی و بهداشتی">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon "></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">مذهب</div>
+                                    <div class="item-input">
+                                        <select name="mazhab" multiple>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon "></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">قومیت</div>
+                                    <div class="item-input">
+                                        <select name="ghowmiat" multiple>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
