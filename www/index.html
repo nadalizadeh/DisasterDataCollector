@@ -10,7 +10,8 @@
   * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
   * Enable inline JS: add 'unsafe-inline' to default-src
 -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+
+<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
 
 <!-- Required meta tags-->
 <meta charset="utf-8">
@@ -95,7 +96,7 @@ http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-theme
         <div class="toolbar">
           <div class="toolbar-inner">
             <!-- Toolbar links -->
-            <a href="#" class="link">ارسال به مرکز</a>
+            <a href="#" class="link" id="uploadDataButton">ارسال به مرکز</a>
             <!-- <a href="#" class="link">Link 2</a> -->
           </div>
         </div>

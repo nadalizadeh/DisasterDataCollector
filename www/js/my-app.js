@@ -138,20 +138,55 @@ $$(document).on('deviceready', function () {
 
 })
 
-// Now we need to run the code that will be executed only for About page.
+// TODO: incomplete
+function uploadDataToServer () {
+  var reqData = {
+    userId: 'gholi',
+    visitId: 0,
+    visitName: 'visit-1',
+    details: {
+    }
+  }
 
-// Option 1. Using page callback for page (for "about" page in this case) (recommended way):
+  Object.keys(Template7.global.formList).forEach(function (currentValue, catIndex, arr) {
+    Template7.global.formList[currentValue].forEach(function (formInfo, index2, arr) {
+      var visitId = 0
+      var formName = 'V' + visitId + '-form' + formInfo.id
+      var m = myApp.formGetData(formName)
+      console.log('Form: ' + formName + ' -> ' + m)
+      reqData.details['WWWW'] = {}
+      reqData.details[formInfo.formId] = myApp.formGetData(formName)
+    })
+  })
+  console.log('X')
+  $$.ajax({
+    contentType: 'application/json',
+    data: JSON.stringify(reqData),
+    dataType: 'raw',
+    success: function (data) {
+        console.log('Data received : ' + data)
+    },
+    error: function (xmlhttp, err) {
+        console.log('Ajax req failed ' + err)
+    },
+    processData: false,
+    type: 'POST',
+    url: 'http://192.168.1.54/disaster/pushdata.php'
+  });
+}
+
 myApp.onPageInit('index', function (page) {
   populateVisitList()
   $$('#addVisitButton').click(addVisitButtonClicked)
+  $$('#uploadDataButton').click(uploadDataToServer)
 
   var i = 0,
       oJson = {},
       sKey;
   for (; sKey = window.localStorage.key(i); i++) {
-      oJson[sKey] = window.localStorage.getItem(sKey);
+      oJson[sKey] = window.localStorage.getItem(sKey)
   }
-  console.log(oJson);
+  console.log(oJson)
 })
 
 myApp.onPageInit('formlist', function (page) {
