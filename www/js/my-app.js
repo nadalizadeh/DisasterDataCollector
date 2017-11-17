@@ -101,6 +101,11 @@ function populateVisitList () {
 
 // --------------------------------------------------
 myApp.onPageInit('form0', function (page) {
+  $$('#roosta').change(function (e) {
+    var visitId = $$(e.target).data('visitid')
+    visitList[visitId] = e.target.value
+    saveVisitList()
+  })
   $$('#receiveDataFromGPSButton').click(function (e) {
     // onSuccess Callback
     // This method accepts a Position object, which contains the
@@ -139,6 +144,14 @@ $$(document).on('deviceready', function () {
 myApp.onPageInit('index', function (page) {
   populateVisitList()
   $$('#addVisitButton').click(addVisitButtonClicked)
+
+  var i = 0,
+      oJson = {},
+      sKey;
+  for (; sKey = window.localStorage.key(i); i++) {
+      oJson[sKey] = window.localStorage.getItem(sKey);
+  }
+  console.log(oJson);
 })
 
 myApp.onPageInit('formlist', function (page) {
