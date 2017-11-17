@@ -49,6 +49,7 @@ CREATE TABLE `visits` (
   `barq` text,
   `mokhaberat` text,
   `zirsakht` text,
+  `transportation` text,
   `tasfie_ab` text,
   `modiriat` text,
   `marta` text,

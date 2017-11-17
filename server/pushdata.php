@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($postBody))
 	$json_fields = ['trusted_person', 'eskan', 'salamat',
 	'amoozesh', 'qaza', 'miras', 'rosoom', 'keshavarzi',
 	'haqe_ab', 'tejarat', 'tourism', 'mali', 'barq', 'mokhaberat',
-	'zirsakht', 'tasfie_ab', 'modiriat', 'marta', 'hemaiat_ejtemaee'];
+	'zirsakht', 'transportation', 'tasfie_ab', 'modiriat',
+	'marta', 'hemaiat_ejtemaee'];
 
 	$plain_fields = [
 		'ostan', 'city', 'bakhsh', 'abadi',
@@ -67,21 +68,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($postBody))
 		'eskan' => '1-1',
 		'salamat' => '1-2',
 		'amoozesh' => '1-3',
-		'qaza' => '',
-		'miras' => '',
-		'rosoom' => '',
-		'keshavarzi' => '',
-		'haqe_ab' => '',
-		'tejarat' => '',
-		'tourism' => '',
-		'mali' => '',
-		'barq' => '',
-		'mokhaberat' => '',
-		'zirsakht' => '',
-		'tasfie_ab' => '',
-		'modiriat' => '',
-		'marta' => '',
-		'hemaiat_ejtemaee' => ''
+		'qaza' => '1-4',
+		'miras' => '1-5',
+		'rosoom' => '1-6',
+		'keshavarzi' => '2-1',
+		'haqe_ab' => '2-2',
+		'tejarat' => '2-3',
+		'tourism' => '2-4',
+		'mali' => '2-5',
+		'barq' => '3-1',
+		'mokhaberat' => '3-2',
+		'zirsakht' => '3-3',
+		'transportation' => '3-4',
+		'tasfie_ab' => '3-5',
+		'modiriat' => '4-1',
+		'marta' => '4-2',
+		'hemaiat_ejtemaee' => '4-3'
 	);
 
 	$emptyStr = '';
