@@ -2,41 +2,214 @@
 
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="left">
-      <a href="#" class="back link">
-        <i class="icon icon-back"></i>
-        <span>Back</span>
-      </a>
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">{{caption}}</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
     </div>
-    <div class="center sliding">{{caption}}</div>
-    <div class="right">
-      <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-    </div>
-  </div>
 </div>
 
 <div class="pages">
-  <div data-page="form{{id}}" class="page">
+    <div data-page="form{{id}}" class="page">
 
-    <div class="page-content">
-      <div class="content-block">این فرم هنوز ساخته نشده است. با تغییر فایل مربوطه در شاخه‌ی فرم ها آن را تنظیم کنید</div>
-      <div class="content-block">forms/form{{id}}.html</div>
-      <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
-        <ul>
-          <li>
-            <div class="item-content">
-              <div class="item-media"><i class="icon icon-form-name"></i></div>
-              <div class="item-inner">
-                <div class="item-title label">فیلد۱</div>
-                <div class="item-input">
-                  <input type="text" name="fieldName" placeholder="فیلد تستی">
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </form>
+        <div class="page-content">
+            <div class="content-block">forms/form{{id}}.html</div>
+
+            <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> تعداد دبیرستانی (‍۱۳-۱۸)</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-zende"
+                                           placeholder="تعداد افراد زنده در سن تحصیل در مقطع دبیرستان (‍۱۳-۱۸)">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label"> تعداد دبستانی (۷-۱۳)</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-zende"
+                                           placeholder="تعداد افراد زنده در سن تحصیل در مقطع دبستان (۷-۱۳)"
+                                    ></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">دبستان - قبل</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-before-eq"
+                                           placeholder="تعداد دبستان قبل از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">راهنمایی - قبل</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-before-eq"
+                                           placeholder="تعداد راهنمایی قبل از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">دبیرستان - قبل</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-before-eq"
+                                           placeholder="تعداد دبیرستان قبل از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">دبستان - بعد</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-after-eq"
+                                           placeholder="تعداد دبستان بعد از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">راهنمایی - بعد</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-after-eq"
+                                           placeholder="تعداد راهنمایی بعد از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">دبیرستان - بعد</div>
+                                <div class="item-input">
+                                    <input type="number" pattern="[0-9]*" name="total-dabestan-after-eq"
+                                           placeholder="تعداد دبیرستان بعد از زلزله">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <li>
+                    <a href="#" class="item-link smart-select">
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">درصد آسیب به سازه</div>
+                                <div class="item-input">
+                                    <select name="madrese-asib-saze">
+                                        <option value="0">0</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                        <option value="60">60</option>
+                                        <option value="70">70</option>
+                                        <option value="80">80</option>
+                                        <option value="90">90</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="item-link smart-select">
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">درصد آسیب به مبلمان آموزشی</div>
+                                <div class="item-input">
+                                    <select name="madrese-asib-mobleman">
+                                        <option value="0">0</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                        <option value="60">60</option>
+                                        <option value="70">70</option>
+                                        <option value="80">80</option>
+                                        <option value="90">90</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="item-link smart-select">
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">تلفات انسانی نیروی آموزشی</div>
+                                <div class="item-input">
+                                    <select name="madrese-talafat-kadr-niro-ensani">
+                                        <option value="0">0</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                        <option value="60">60</option>
+                                        <option value="70">70</option>
+                                        <option value="80">80</option>
+                                        <option value="90">90</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+            </form>
+
+        </div>
     </div>
-  </div>
 </div>
