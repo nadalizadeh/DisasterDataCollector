@@ -25,6 +25,9 @@ $formAliases = array(
 );
 
 header("Access-Control-Allow-Origin: *");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 
 $pdo = new PDO(PDO_URL, PDO_USERNAME, PDO_PASSWORD);
 
@@ -32,17 +35,6 @@ $postBody = file_get_contents('php://input');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($postBody))
 {
-	$json_fields = ['trusted_person', 'eskan', 'salamat',
-	'amoozesh', 'qaza', 'miras', 'rosoom', 'keshavarzi',
-	'haqe_ab', 'tejarat', 'tourism', 'mali', 'barq', 'mokhaberat',
-	'zirsakht', 'transportation', 'tasfie_ab', 'modiriat',
-	'marta', 'hemaiat_ejtemaee'];
-
-	$plain_fields = [
-		'ostan', 'city', 'bakhsh', 'abadi',
-		'latitude', 'longitude', 'date', 'user_id'
-	];
-
 	$all_fields = array_merge($plain_fields, $json_fields);
 
 	$backquoted_join = join('`, `', $all_fields);
