@@ -24,15 +24,16 @@
 
 CREATE TABLE `visits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
   `visit_id` int(11) NOT NULL,
   `visit_name` varchar(60) NOT NULL,
   `ostan` varchar(50) DEFAULT NULL,
   `city` varchar(70) DEFAULT NULL,
   `bakhsh` varchar(70) DEFAULT NULL,
   `abadi` varchar(70) DEFAULT NULL,
-  `location` varchar(100) DEFAULT NULL,
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
   `date` int(11) DEFAULT NULL,
-  `user` varchar(50) DEFAULT NULL,
   `trusted_person` text,
   `eskan` text,
   `salamat` text,
@@ -53,7 +54,7 @@ CREATE TABLE `visits` (
   `marta` text,
   `hemaiat_ejtemaee` text,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_index` (`user`,`visit_id`)
+  UNIQUE KEY `unique_index` (`user_id`,`visit_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

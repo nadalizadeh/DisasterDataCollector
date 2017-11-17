@@ -78,7 +78,7 @@ function addVisit (visitName) {
 }
 
 function addVisitButtonClicked () {
-  addVisit('visit-' + (visitList.length + 1))
+  addVisit('بازدید ' + (visitList.length + 1))
   populateVisitList()
 }
 
@@ -140,39 +140,45 @@ $$(document).on('deviceready', function () {
 
 // TODO: incomplete
 function uploadDataToServer () {
-  var reqData = {
-    userId: 'gholi',
-    visitId: 0,
-    visitName: 'visit-1',
-    details: {
+//for (var visitId = 0; visitId < visitList.length; visitId++)
+    visitId = 0
+    {
+    var reqData = {
+      userId: 'gholi',
+      visitId: visitId,
+      visitName: visitList[visitId],
+      details: {
+        // Will be filled with the following logic
+      }
     }
-  }
 
-  Object.keys(Template7.global.formList).forEach(function (currentValue, catIndex, arr) {
-    Template7.global.formList[currentValue].forEach(function (formInfo, index2, arr) {
-      var visitId = 0
-      var formName = 'V' + visitId + '-form' + formInfo.id
-      var m = myApp.formGetData(formName)
-      console.log('Form: ' + formName + ' -> ' + m)
-      reqData.details['WWWW'] = {}
-      reqData.details[formInfo.formId] = myApp.formGetData(formName)
+    Object.keys(Template7.global.formList).forEach(function (currentValue, catIndex, arr) {
+      Template7.global.formList[currentValue].forEach(function (formInfo, index2, arr) {
+        var formName = 'V' + visitId + '-form' + formInfo.id
+        var m = myApp.formGetData(formName)
+        if (m !== undefined) {
+          console.log('Form: ' + formName + ' -> ' + m)
+          reqData.details[formInfo.formId] = myApp.formGetData(formName)
+        }
+      })
     })
-  })
-  console.log('X')
-  $$.ajax({
-    contentType: 'application/json',
-    data: JSON.stringify(reqData),
-    dataType: 'raw',
-    success: function (data) {
-        console.log('Data received : ' + data)
-    },
-    error: function (xmlhttp, err) {
-        console.log('Ajax req failed ' + err)
-    },
-    processData: false,
-    type: 'POST',
-    url: 'http://192.168.1.54/disaster/pushdata.php'
-  });
+
+    console.log('X')
+    $$.ajax({
+      contentType: 'application/json',
+      data: JSON.stringify(reqData),
+      dataType: 'raw',
+      success: function (data) {
+          console.log('Data received : ' + data)
+      },
+      error: function (xmlhttp, err) {
+          console.log('Ajax req failed ' + err)
+      },
+      processData: false,
+      type: 'POST',
+      url: 'http://192.168.1.16/disaster/pushdata.php'
+    })
+  }
 }
 
 myApp.onPageInit('index', function (page) {
