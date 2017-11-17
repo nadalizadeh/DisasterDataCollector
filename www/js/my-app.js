@@ -7,12 +7,12 @@ var myApp = new Framework7({
 })
 
 Template7.global = {
-  'name': 'Ali',
   formList: [
-    {id: 11, formid: '1-1', caption: 'اجتماعی - اسکان'},
-    {id: 12, formid: '1-2', caption: 'اجتماعی - سلامت و جمعیت'},
-    {id: 13, formid: '1-3', caption: 'اجتماعی - آموزش'},
-    {id: 14, formid: '1-4', caption: 'اجتماعی - مواد غذایی'}
+    {id: 0, formId: '0', caption: 'اطلاعات پایه'},
+    {id: 11, formId: '1-1', caption: 'اجتماعی - اسکان'},
+    {id: 12, formId: '1-2', caption: 'اجتماعی - سلامت و جمعیت'},
+    {id: 13, formId: '1-3', caption: 'اجتماعی - آموزش'},
+    {id: 14, formId: '1-4', caption: 'اجتماعی - مواد غذایی'}
   ]
 }
 
