@@ -7,13 +7,38 @@ var myApp = new Framework7({
 })
 
 Template7.global = {
-  formList: [
-    {id: 0, formId: '0', caption: 'اطلاعات پایه'},
-    {id: 11, formId: '1-1', caption: 'اجتماعی - اسکان'},
-    {id: 12, formId: '1-2', caption: 'اجتماعی - سلامت و جمعیت'},
-    {id: 13, formId: '1-3', caption: 'اجتماعی - آموزش'},
-    {id: 14, formId: '1-4', caption: 'اجتماعی - مواد غذایی'}
-  ]
+  formList: {
+    'پایه': [
+      {id: 0, formId: '0', caption: 'اطلاعات پایه'}
+    ],
+    'اجتماعی': [
+      {id: 11, formId: '1-1', caption: 'اسکان'},
+      {id: 12, formId: '1-2', caption: 'سلامت و جمعیت'},
+      {id: 13, formId: '1-3', caption: 'آموزش'},
+      {id: 14, formId: '1-4', caption: 'مواد غذایی'},
+      {id: 15, formId: '1-5', caption: 'میراث فرهنگی'},
+      {id: 16, formId: '1-6', caption: 'آداب و رسوم ویژه'}
+    ],
+    'تولیدی': [
+      {id: 21, formId: '2-1', caption: 'کشاورزی'},
+      {id: 22, formId: '2-2', caption: 'حق آبه ها'},
+      {id: 23, formId: '2-3', caption: 'صنعت و تجارت'},
+      {id: 24, formId: '2-4', caption: 'گردشگری'},
+      {id: 25, formId: '2-5', caption: 'مالی'}
+    ],
+    'زیرساختی': [
+      {id: 31, formId: '3-1', caption: 'برق'},
+      {id: 32, formId: '3-2', caption: 'مخابرات'},
+      {id: 33, formId: '3-3', caption: 'زیرساخت مخابرات'},
+      {id: 34, formId: '3-4', caption: 'حمل و نقل'},
+      {id: 35, formId: '3-5', caption: 'آب، تصفیه و بهداشت'}
+    ],
+    'مدیریتی': [
+      {id: 41, formId: '4-1', caption: 'مدیریت'},
+      {id: 42, formId: '4-2', caption: 'مرتع و محیط زیست'},
+      {id: 43, formId: '4-3', caption: 'حمایت اجتماعی'}
+    ]
+  }
 }
 
 // If we need to use custom DOM library, let's save it to $$ variable:
@@ -74,42 +99,37 @@ function populateVisitList () {
   $$('#visit-listblock > ul').html(thehtml)
 }
 
+// --------------------------------------------------
+myApp.onPageInit('form0', function (page) {
+  $$('#receiveDataFromGPSButton').click(function (e) {
+    // onSuccess Callback
+    // This method accepts a Position object, which contains the
+    // current GPS coordinates
+    //
+    var onGeoSuccess = function (position) {
+      $$('#latitude').val(position.coords.latitude)
+      $$('#longitude').val(position.coords.longitude)
+  //    'Accuracy: '          + position.coords.accuracy          + '\n' +
+  //    'Timestamp: '         + position.timestamp                + '\n')
+    }
+
+    // onError Callback receives a PositionError object
+    //
+    function onGeoError (error) {
+      alert('code: ' + error.code + '\n' +
+      'message: ' + error.message + '\n')
+    }
+
+    // myVar = setTimeout(alertFunc, 3000);
+
+    $$('#latitude').val('در حال دریافت')
+    navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError)
+  })
+})
+
+
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
-  console.log("Device is ready!")
-
-  // onSuccess Callback
-  // This method accepts a Position object, which contains the
-  // current GPS coordinates
-  //
-  var onGeoSuccess = function (position) {
-    // var element = document.getElementById('latbtn');
-    // element.innerHTML = 'HEllo';
-
-    $$('#latbtn').html(position.coords.latitude)
-    $$('#lngbtn').html(position.coords.longitude)
-    //position.coords.latitude
-    /*    alert('Latitude: '          + position.coords.latitude          + '\n' +
-    'Longitude: '         + position.coords.longitude         + '\n' +
-    'Altitude: '          + position.coords.altitude          + '\n' +
-    'Accuracy: '          + position.coords.accuracy          + '\n' +
-    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-    'Heading: '           + position.coords.heading           + '\n' +
-    'Speed: '             + position.coords.speed             + '\n' +
-    'Timestamp: '         + position.timestamp                + '\n')
-    */
-  };
-
-  // onError Callback receives a PositionError object
-  //
-  function onGeoError(error) {
-    alert('code: '    + error.code    + '\n' +
-    'message: ' + error.message + '\n')
-  }
-
-  // myVar = setTimeout(alertFunc, 3000);
-
-  navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError)
 
 })
 
@@ -117,13 +137,11 @@ $$(document).on('deviceready', function () {
 
 // Option 1. Using page callback for page (for "about" page in this case) (recommended way):
 myApp.onPageInit('index', function (page) {
-  // Do something here for "about" page
   populateVisitList()
   $$('#addVisitButton').click(addVisitButtonClicked)
 })
 
 myApp.onPageInit('formlist', function (page) {
-  // Do something here for "about" page
   // populateFormList()
 })
 

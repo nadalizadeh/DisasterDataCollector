@@ -19,10 +19,11 @@
 <div class="pages">
   <div data-page="formlist" class="page">
     <div class="page-content">
-      <div class="content-block-title">اطلاعات بازدید</div>
+      {{#each @global.formList}}
+      <div class="content-block-title">{{@key}}</div>
       <div class="list-block" id="formlist-listblock">
         <ul>
-          {{#each @global.formList}}
+          {{#each this}}
           <li><a href="form{{this.id}}.html" class="item-link item-content" data-context='{ "id": {{this.id}}, "caption": "{{this.caption}}", "visitId": "{{@root.visitId}}" }'>
               <div class="item-inner">
                 <div class="item-title">{{this.caption}} - {{this.formId}}</div>
@@ -31,6 +32,7 @@
           {{/each}}
         </ul>
       </div>
+      {{/each}}
     </div>
   </div>
 </div>
