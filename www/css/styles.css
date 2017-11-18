@@ -13,3 +13,10 @@
 .statusbar-overlay {
     background: #000000;
 }
+
+/* So that we can display long labels in forms */
+.list-block .item-title { 
+    text-overflow: unset;
+    white-space: unset;
+}
+
