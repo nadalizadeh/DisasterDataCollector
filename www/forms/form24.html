@@ -25,12 +25,15 @@
                 <ul>
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label"> تعداد گردشگران</div>
+                                <div class="item-title label">
+                                    تعداد معمول گردشگران مراجعه‌کننده به آبادی در هر ماه پیش از زلزله (نفر)
+                                </div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="gardeshgaran"
-                                           placeholder="تعداد معمول گردشگران مراجعه‌کننده به آبادی در هر ماه پیش از زلزله">
+                                    <input type="number"
+                                           id="gardeshgaran-total"
+                                           name="gardeshgaran-total"
+                                           placeholder="1000 ...">
                                 </div>
                             </div>
                         </div>
@@ -38,12 +41,13 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">ویژگی‌های گردشگری</div>
+                                <div class="item-title label">ویژگی‌های گردشگری آبادی پیش از زلزله</div>
                                 <div class="item-input">
-                                    <input type="text" name="gardeshgari-vijegi"
-                                           placeholder="ویژگی‌های گردشگری آبادی پیش از زلزله">
+                                    <input type="text"
+                                           id="gardeshgari-vijegi"
+                                           name="gardeshgari-vijegi"
+                                           placeholder="چشمه‌های آب گرم، کوهنوردی ...">
                                 </div>
                             </div>
                         </div>
@@ -52,13 +56,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
-میران آسیب به زیرساخت‌های گردشگری روستا
+                                        میران آسیب به زیرساخت‌های گردشگری روستا
                                     </div>
                                     <div class="item-input">
-                                        <select name="gardeshgari-asib">
+                                        <select id="gardeshgari-asib"
+                                                name="gardeshgari-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
