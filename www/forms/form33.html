@@ -23,15 +23,15 @@
             <div class="content-block">forms/form{{id}}.html</div>
             <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
                 <ul>
-
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">تعداد آنتن‌های BTS - قبل</div>
+                                <div class="item-title label">تعداد آنتن‌های BTS قبل از زلزله</div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="net-bts-before-eq"
-                                           placeholder="تعداد آنتن‌های BTS قبل از زلزله">
+                                    <input type="number"
+                                           id="net-bts-before-eq"
+                                           name="net-bts-before-eq"
+                                           placeholder="2 ...">
                                 </div>
                             </div>
                         </div>
@@ -40,13 +40,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
-                                        میران آسیب به آنتن‌های BTS
+                                        میران آسیب به آنتن‌های BTS (درصد)
                                     </div>
                                     <div class="item-input">
-                                        <select name="net-bts-asib">
+                                        <select id="net-bts-asib"
+                                                name="net-bts-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -68,13 +68,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
-                                        میران تخریب دکل‌های رادیو تلویزیون
+                                        میران تخریب دکل‌های رادیو تلویزیون در صورت وجود (درصد)
                                     </div>
                                     <div class="item-input">
-                                        <select name="radiotv-antena-asib">
+                                        <select id="radiotv-antena-asib"
+                                                name="radiotv-antena-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -92,10 +92,8 @@
                             </div>
                         </a>
                     </li>
-
                 </ul>
             </form>
-
         </div>
     </div>
 </div>
