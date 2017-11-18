@@ -20,3 +20,12 @@
     white-space: unset;
 }
 
+
+.list-block li { list-style: none; }
+
+/* So that it would be less painful to develop on laptop with iOS theme */
+@media only screen and (min-width: 700px) {
+    .page-content {
+        padding: 5em;;
+    }
+}
