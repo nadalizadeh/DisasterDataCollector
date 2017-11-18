@@ -25,12 +25,96 @@
                 <ul>
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">تعداد پست برق - قبل</div>
+                                <div class="item-title label">
+                                    تعداد ترانس برق پیش از زلزله
+                                </div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="bargh-total-before-eq"
-                                           placeholder="تعداد پست برق و تاسیسات پیش از زلزله">
+                                    <input type="number"
+                                           id="bargh-tarans-total-before-eq"
+                                           name="bargh-tarans-total-before-eq"
+                                           placeholder="4 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    تعداد موتور برق پیش از زلزله
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="bargh-motor-total-before-eq"
+                                           name="bargh-motor-total-before-eq"
+                                           placeholder="4 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    تعداد دکل اصلی برق پیش از زلزله
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="bargh-dakal-total-before-eq"
+                                           name="bargh-dakal-total-before-eq"
+                                           placeholder="4 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    تعداد ترانس برق آسیب دیده
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="bargh-tarans-total-asib"
+                                           name="bargh-tarans-total-asib"
+                                           placeholder="4 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    تعداد موتور برق آسیب دیده
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="bargh-motor-total-asib"
+                                           name="bargh-motor-total-asib"
+                                           placeholder="4 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    تعداد دکل اصلی برق آسیب دیده
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="bargh-dakal-total-asib"
+                                           name="bargh-dakal-total-asib"
+                                           placeholder="4 ...">
                                 </div>
                             </div>
                         </div>
@@ -39,39 +123,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
-                                <div class="item-inner">
-                                    <div class="item-title label">میزان آسیب به پست نبدیل، دکل و تیر برق و تاسیسات</div>
-                                    <div class="item-input">
-                                        <select name="bargh-asib">
-                                            <option value="0">0</option>
-                                            <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="40">40</option>
-                                            <option value="50">50</option>
-                                            <option value="60">60</option>
-                                            <option value="70">70</option>
-                                            <option value="80">80</option>
-                                            <option value="90">90</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="item-link smart-select">
-                            <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
                                         میران آسیب به پمپ بنزین و مراکز فروش محصولات نفتی
                                     </div>
                                     <div class="item-input">
-                                        <select name="nafti-asib">
+                                        <select id="nafti-asib"
+                                                name="nafti-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>

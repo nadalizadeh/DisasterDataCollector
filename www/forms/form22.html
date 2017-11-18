@@ -23,37 +23,98 @@
             <div class="content-block">forms/form{{id}}.html</div>
             <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
                 <ul>
+
                     <li>
-                        <a href="#" class="item-link smart-select">
-                            <div class="item-content">
-                                <div class="item-media"><i class="icon "></i></div>
-                                <div class="item-inner">
-                                    <div class="item-title label">منابع تامین آب</div>
-                                    <div class="item-input">
-                                        <select name="ab-manabe" multiple>
-                                            <option value="roodkhane"> رودخانه</option>
-                                            <option value="cheshme"> چشمه</option>
-                                            <option value="ghanat"> قنات</option>
-                                            <option value="berke"> برکه</option>
-                                            <option value="chah"> چاه</option>
-                                        </select>
-                                    </div>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    رودخانه
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="ab-tamin-roodkhane"
+                                           name="ab-tamin-roodkhane"
+                                           placeholder="3 ...">
                                 </div>
                             </div>
-                        </a>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    چشمه
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="ab-tamin-cheshme"
+                                           name="ab-tamin-cheshme"
+                                           placeholder="3 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    قنات
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="ab-tamin-ghanat"
+                                           name="ab-tamin-ghanat"
+                                           placeholder=" 3 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    برکه
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="ab-tamin-berke"
+                                           name="ab-tamin-berke"
+                                           placeholder="3 ...">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    چاه
+                                </div>
+                                <div class="item-input">
+                                    <input type="number"
+                                           id="ab-tamin-chah"
+                                           name="ab-tamin-chah"
+                                           placeholder="3 ...">
+                                </div>
+                            </div>
+                        </div>
                     </li>
 
 
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
-میزان آسیب به منبع تامین آب - رودخانه - در صورت وجود
+                                        میزان آسیب به منبع تامین آب - رودخانه - در صورت وجود
                                     </div>
                                     <div class="item-input">
-                                        <select name="ab-roodkhane-asib">
+                                        <select id="ab-roodkhane-asib"
+                                                name="ab-roodkhane-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -75,13 +136,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
                                         میزان آسیب به منبع تامین آب - چشمه - در صورت وجود
                                     </div>
                                     <div class="item-input">
-                                        <select name="ab-cheshme-asib">
+                                        <select id="ab-cheshme-asib"
+                                                name="ab-cheshme-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -103,13 +164,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
                                         میزان آسیب به منبع تامین آب - قنات - در صورت وجود
                                     </div>
                                     <div class="item-input">
-                                        <select name="ab-ghanat-asib">
+                                        <select id="ab-ghanat-asib"
+                                                name="ab-ghanat-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -131,13 +192,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
                                         میزان آسیب به منبع تامین آب - برکه - در صورت وجود
                                     </div>
                                     <div class="item-input">
-                                        <select name="ab-berke-asib">
+                                        <select id="ab-berke-asib"
+                                                name="ab-berke-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -159,13 +220,13 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
                                         میزان آسیب به منبع تامین آب - چاه - در صورت وجود
                                     </div>
                                     <div class="item-input">
-                                        <select name="ab-chah-asib">
+                                        <select id="ab-chah-asib"
+                                                name="ab-chah-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -184,17 +245,16 @@
                         </a>
                     </li>
 
-
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-name"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">
-میزان آسیب به تاسیسات تامین و انتقال آب اعم از موتور و پمپ و لوله‌های انتقال
+                                        میزان آسیب به تاسیسات تامین و انتقال آب اعم از موتور و پمپ و لوله‌های انتقال
                                     </div>
                                     <div class="item-input">
-                                        <select name="ab-tasisat-asib">
+                                        <select id="ab-tasisat-asib"
+                                                name="ab-tasisat-asib">
                                             <option value="0">0</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>

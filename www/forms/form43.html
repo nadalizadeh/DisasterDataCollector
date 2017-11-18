@@ -26,30 +26,40 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">
-                                    حمایت‌شدگان بیمه
+                                    تعداد افراد زیر پویش نهادهای حمایتی مثل کمیته امداد و بهزیستی (نفر)
                                 </div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="net-gsm-before-eq"
-                                           placeholder="تعداد افراد زیر پویش نهادهای حمایتی مثل کمیته امداد و بهزیستی">
+                                    <input type="number"
+                                           id="net-gsm-before-eq"
+                                           name="net-gsm-before-eq"
+                                           placeholder="70 ...">
                                 </div>
                             </div>
                         </div>
                     </li>
 
                     <li>
-                        <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
-                            <div class="item-inner">
-                                <div class="item-title label">ارزیابی</div>
-                                <div class="item-input">
-                                    <input type="text" name="gardeshgari-vijegi"
-                                           placeholder="ارزیابی کارشناسی پایشگر از توان اقتصادی اهالی برای بازسازی آبادی">
+                        <a href="#" class="item-link smart-select">
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">
+                                        ارزیابی کارشناسی پایشگر از توان اقتصادی اهالی برای بازسازی آبادی
+                                    </div>
+                                    <div class="item-input">
+                                        <select id="arzeshyabi-payeshgar"
+                                                name="arzeshyabi-payeshgar">
+                                            <option value="besiar-tavanmand"> بسیار توانمند</option>
+                                            <option value="tavanmand"> توانمند</option>
+                                            <option value="motevaset"> متوسط</option>
+                                            <option value="natavan"> ناتوان</option>
+                                            <option value="besiar-natavan"> بسیار ناتوان</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </li>
                 </ul>
             </form>
