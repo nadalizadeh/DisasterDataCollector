@@ -1,3 +1,21 @@
+
+var DEBUG = false;
+var TARGET_URL = DEBUG ? 'http://localhost:9090' : 'http://rootshell.ir/disaster/pushdata.php';
+var UPLOAD_TIMEOUT = 10000;
+var ID_FORM__LOGIN = 'login-data';
+
+function msg(type, text) {
+    'use strict';
+    if(type === 'err') {
+        text = 'خطا' +
+            ': ' +
+            text;
+    }
+    $$("#toolbarMsg").text(text);
+}
+
+// --------------------------------------------------
+
 // Initialize app
 var myApp = new Framework7({
   template7Pages: true, // enable Template7 rendering for Ajax and Dynamic pages
@@ -5,6 +23,7 @@ var myApp = new Framework7({
   template7Data: {
   }
 })
+window.hahaha = myApp;
 
 Template7.global = {
   formList: {
@@ -49,6 +68,8 @@ var mainView = myApp.addView('.view-main', {
   // Because we want to use dynamic navbar, we need to enable it for this view:
   dynamicNavbar: true
 })
+
+// --------------------------------------------------
 
 var visitList = []
 
@@ -100,6 +121,133 @@ function populateVisitList () {
 }
 
 // --------------------------------------------------
+
+var upload = {
+    inProgress: false,
+    set: function () {
+        var self = this;
+        this.inProgress = true;
+        $$("#uploadDataButton").hide();
+        var remaining = Math.round(UPLOAD_TIMEOUT / 1000);
+        console.log('remain', remaining);
+        function displayTime() {
+            if(!self.isInProg() || --remaining < 0) {
+                return;
+            }
+            m = 'در حال ارسال ' + remaining + '...';
+            msg('info', m);
+            setTimeout(displayTime, 1000);
+        }
+        displayTime();
+    },
+    unset: function () {
+        this.inProgress = false;
+        $$("#uploadDataButton").show();
+    },
+    isInProg: function () {
+        return this.inProgress;
+    },
+
+    sayWait: function () {
+        msg('info', 'اطلاعات در حال ارسال است لطفا صبر کنید...');
+    },
+    sayOk: function () {
+        msg('info', 'ارسال موفق بود');
+    },
+    sayFail: function () {
+        msg('err', 'متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد');
+    }
+};
+
+var user = {
+    get: function () {
+        'use strict';
+        var data = myApp.formGetData(ID_FORM__LOGIN);
+
+        if(!data) {
+            msg('err', 'اطلاعات کاربری وارد نشده است');
+            return null;
+        }
+        if(!data.username) {
+            msg('err', 'نام کاربری وارد نشده است');
+            return null;
+        }
+        if(!data.password) {
+            msg('err', 'رمز عبور وارد نشده است');
+            return null;
+        }
+
+        return data;
+    }
+};
+
+function uploadDataToServer () {
+    if(upload.isInProg()) {
+        upload.sayWait();
+        return;
+    }
+    upload.set();
+
+    var userInfo = user.get();
+    if(userInfo === null) {
+        upload.unset();
+        return;
+    }
+
+    var reqData = {
+        items: [],
+        user: userInfo
+    };
+
+    for (var visitId = 0; visitId < visitList.length; visitId++) {
+        var visitData = {
+            visitId: visitId,
+            visitName: visitList[visitId],
+            details: {
+                // Will be filled with the following logic
+            }
+        };
+
+        Object.keys(Template7.global.formList).forEach(function (currentValue, catIndex, arr) {
+            Template7.global.formList[currentValue].forEach(function (formInfo, index2, arr) {
+                var formName = 'V' + visitId + '-form' + formInfo.id;
+                var m = myApp.formGetData(formName);
+                if (m !== undefined) {
+                    console.log('Form: ' + formName + ' -> ' + m);
+                    visitData.details[formInfo.formId] = myApp.formGetData(formName);
+                }
+            });
+        });
+
+        reqData.items.push(visitData);
+    }
+
+    console.log("sending data", reqData);
+    console.log('sending to: ', TARGET_URL);
+
+    $$.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(reqData),
+        dataType: 'raw',
+        success: function (data) {
+            console.log('Data received : ', data);
+            upload.sayOk();
+            upload.unset();
+        },
+        error: function (xmlhttp, err) {
+            console.log('Ajax req failed ', err);
+            upload.sayFail(err);
+            upload.unset();
+        },
+        processData: false,
+        type: 'POST',
+        url: TARGET_URL,
+        timeout: UPLOAD_TIMEOUT
+    });
+}
+
+// --------------------------------------------------
+
 myApp.onPageInit('form0', function (page) {
   $$('#roosta').change(function (e) {
     var visitId = $$(e.target).data('visitid')
@@ -137,57 +285,6 @@ myApp.onPageInit('form0', function (page) {
 $$(document).on('deviceready', function () {
 
 })
-
-function uploadDataToServer () {
-  $$("uploadDataButton").hide()
-
-  var reqData = {
-    items: []
-  }
-
-  for (var visitId = 0; visitId < visitList.length; visitId++) {
-    var visitData = {
-      userId: 'gholi', // TODO: Fill with current user name
-      visitId: visitId,
-      visitName: visitList[visitId],
-      details: {
-        // Will be filled with the following logic
-      }
-    }
-
-    Object.keys(Template7.global.formList).forEach(function (currentValue, catIndex, arr) {
-      Template7.global.formList[currentValue].forEach(function (formInfo, index2, arr) {
-        var formName = 'V' + visitId + '-form' + formInfo.id
-        var m = myApp.formGetData(formName)
-        if (m !== undefined) {
-          console.log('Form: ' + formName + ' -> ' + m)
-          visitData.details[formInfo.formId] = myApp.formGetData(formName)
-        }
-      })
-    })
-
-    reqData.items.push(visitData)
-  }
-
-  $$.ajax({
-    contentType: 'application/json',
-    data: JSON.stringify(reqData),
-    dataType: 'raw',
-    success: function (data) {
-        console.log('Data received : ' + data)
-        $$("uploadDataButton").show()
-        alert('ارسال موفق بود')
-    },
-    error: function (xmlhttp, err) {
-        console.log('Ajax req failed ' + err)
-        alert('متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد')
-        $$("uploadDataButton").show()
-    },
-    processData: false,
-    type: 'POST',
-    url: 'http://rootshell.ir/disaster/pushdata.php'
-  })
-}
 
 myApp.onPageInit('index', function (page) {
   populateVisitList()
