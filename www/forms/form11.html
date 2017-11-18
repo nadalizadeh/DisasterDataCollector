@@ -24,14 +24,15 @@
                 <ul>
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">تعداد ابنیه اسکان پیش از زلزله</div>
+                                <div class="item-title label">
+                                    تعداد ابنیه اسکان پیش از زلزله
+                                </div>
                                 <div class="item-input">
                                     <input type="number"
                                            id="abniye-before-eq"
                                            name="abniye-before-eq"
-                                           placeholder="125...">
+                                           placeholder="125 ...">
                                 </div>
                             </div>
                         </div>
@@ -39,14 +40,13 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon icon-form-email"></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">تعداد تخریب کامل</div>
                                 <div class="item-input">
                                     <input type="number"
                                            id="takhrib-kamel"
                                            name="takhrib-kamel"
-                                           placeholder="13...">
+                                           placeholder="13 ...">
                                 </div>
                             </div>
                         </div>
@@ -54,14 +54,13 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">تعداد آسیب دیده</div>
                                 <div class="item-input">
                                     <input type="number"
                                            id="asib-dide"
                                            name="asib-dide"
-                                           placeholder="49">
+                                           placeholder="49 ...">
                                 </div>
                             </div>
                         </div>
@@ -70,11 +69,12 @@
                     <li>
                         <a href="#" class="item-link smart-select">
                             <div class="item-content">
-                                <div class="item-media"><i class="icon "></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">مصالح اصلی</div>
                                     <div class="item-input">
-                                        <select name="masaleh-asli" multiple>
+                                        <select id="masaleh-asli"
+                                                name="masaleh-asli"
+                                                multiple>
                                             <option value="ajor">آجر</option>
                                             <option value="choob">چوب</option>
                                             <option value="kahgel">کاهگل</option>
@@ -89,11 +89,13 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">تکنیک ساخت</div>
                                 <div class="item-input">
-                                    <input type="text" name="techniq-sakht" placeholder="تکنیک ساخت">
+                                    <input type="text"
+                                           id="techniq-sakht"
+                                           name="techniq-sakht"
+                                           placeholder="بنایی ...">
                                 </div>
                             </div>
                         </div>
@@ -101,12 +103,13 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">عمر متوسط</div>
+                                <div class="item-title label">عمر متوسط عمومی ابنیه (سال)</div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="building-avg-life"
-                                           placeholder="عمر متوسط عمومی ابنیه">
+                                    <input type="number"
+                                           id="building-avg-life"
+                                           name="building-avg-life"
+                                           placeholder="25 ...">
                                 </div>
                             </div>
                         </div>
@@ -114,12 +117,15 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">تعداد طبقات متوسط</div>
+                                <div class="item-title label">
+                                    تعداد طبقات متوسط عمومی ابنیه (طبقه)
+                                </div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="num-floors-avg"
-                                           placeholder="طبقات متوسط ابنیه">
+                                    <input type="number"
+                                           id="num-floors-avg"
+                                           name="num-floors-avg"
+                                           placeholder="2.5 ...">
                                 </div>
                             </div>
                         </div>
@@ -127,12 +133,15 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">متوسط خانوار</div>
+                                <div class="item-title label">
+                                    تعداد متوسط خانوار در هر واحد مسکونی (خانوار)
+                                </div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="family-avg-in-building"
-                                           placeholder="در هر واحد مسکونی">
+                                    <input type="number"
+                                           id="family-avg-in-building"
+                                           name="family-avg-in-building"
+                                           placeholder="1.5 ...">
                                 </div>
                             </div>
                         </div>
@@ -140,12 +149,15 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">مالکیت شخصی</div>
+                                <div class="item-title label">
+                                    سهم مالکیت شخصی از کل املاک (درصد)
+                                </div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="malekiat-shakhsi"
-                                           placeholder="سهم شخصی نسبت به کل املاک">
+                                    <input type="number"
+                                           id="malekiat-shakhsi"
+                                           name="malekiat-shakhsi"
+                                           placeholder="60 ...">
                                 </div>
                             </div>
                         </div>
@@ -153,12 +165,16 @@
 
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon "></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">متوسط اتاق</div>
+                                <div class="item-title label">
+                                    تعداد متوسط اتاق در هر خانه پیش از زلزله (اتاق)
+
+                                </div>
                                 <div class="item-input">
-                                    <input type="number" pattern="[0-9]*" name="otagh-avg"
-                                           placeholder="در هر خانه پیش از زلزله">
+                                    <input type="number"
+                                           name="otagh-avg"
+                                           id="otagh-avg"
+                                           placeholder="3.5 ...">
                                 </div>
                             </div>
                         </div>
