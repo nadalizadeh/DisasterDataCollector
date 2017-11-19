@@ -1,17 +1,15 @@
 var DEBUG = false;
-var TARGET_URL = DEBUG ? 'http://localhost:9090' : 'http://rootshell.ir/disaster/pushdata.php';
+// var TARGET_URL = DEBUG ? 'http://wordpress:80/cis.php' : 'http://rootshell.ir/disaster/pushdata.php';
+// var TARGET_URL = DEBUG ? 'http://localhost:9090' : 'http://rootshell.ir/disaster/pushdata.php';
+var TARGET_URL = DEBUG ? 'http://wordpress:80/cis.php' : 'http://ob.memari.online:80/cis.php';
+
 var UPLOAD_TIMEOUT = 10000;
 var ID_FORM__LOGIN = 'login-data';
+var MSG_DURATION = 4000;
 
-function msg(type, text) {
-    'use strict';
-    if (type === 'err') {
-        text = 'خطا' +
-            ': ' +
-            text;
-    }
-    $$("#toolbarMsg").text(text);
-}
+var CMD_FORM_DATA = "form_data";
+var CMD_FORM_WHICH_TO_UPLOAD = "form_data_which_to_upload";
+
 
 // --------------------------------------------------
 
@@ -41,7 +39,7 @@ Template7.global = {
         ],
         'اقتصادی': [
             {id: 21, formId: '2-1', caption: 'کشاورزی'},
-            {id: 22, formId: '2-2', caption: 'حق آبه ها'},
+            {id: 22, formId: '2-2', caption: 'منابع تامین آب کشاورزی'},
             {id: 23, formId: '2-3', caption: 'صنعت و تجارت'},
             {id: 24, formId: '2-4', caption: 'گردشگری'},
             {id: 25, formId: '2-5', caption: 'مالی'}
@@ -59,7 +57,7 @@ Template7.global = {
             {id: 43, formId: '4-3', caption: 'حمایت اجتماعی'}
         ]
     }
-};;
+};
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -69,6 +67,139 @@ var mainView = myApp.addView('.view-main', {
     // Because we want to use dynamic navbar, we need to enable it for this view:
     dynamicNavbar: true
 });
+
+// --------------------------------------------------
+
+function isFun(f) {
+    return typeof f === "function";
+}
+
+var msger = {
+    ERR: 'error',
+    OK: 'success',
+    INFO: 'default',
+    m: null,
+    msg: function (type, text, showToast) {
+        if (type === this.ERR)
+            text = 'خطا' + ': ' + text;
+
+        showToast = typeof showToast === 'undefined' || showToast;
+        if (showToast)
+            var toast = new Message(text, {type: type, duration: MSG_DURATION}).show();
+
+        $$("#toolbarMsg").text(text);
+    },
+    err: function (text, showToast) {
+        this.msg(this.ERR, text, showToast);
+    },
+    ok: function (text, showToast) {
+        this.msg(this.OK, text, showToast);
+    },
+    info: function (text, showToast) {
+        this.msg(this.INFO, text, showToast);
+    }
+};
+
+var user = {
+    err: '',
+    get: function () {
+        var data = myApp.formGetData(ID_FORM__LOGIN);
+
+        if (!data) {
+            this.err = 'اطلاعات کاربری وارد نشده است';
+            return null;
+        }
+        if (!data.username) {
+            this.err = 'نام کاربری وارد نشده است';
+            return null;
+        }
+        if (!data.password) {
+            this.err = 'رمز عبور وارد نشده است';
+            return null;
+        }
+
+        return data;
+    },
+    sayErr: function () {
+        msger.err(this.err);
+    }
+};
+
+var upload = newCommInterlock(UPLOAD_TIMEOUT);
+
+function newCommInterlock(timeout) {
+    return {
+        remaining: 0,
+        inProgress: false,
+
+        _displayProgress: function (self) {
+            if (!self.inProgress || --self.remaining < 0)
+                return;
+
+            var m = 'در حال ارسال: ' + self.remaining + '...';
+            msger.info(m, false);
+            setTimeout(self._displayProgress, 1000, self);
+        },
+
+        set: function () {
+            this.inProgress = true;
+            this.remaining = Math.round(timeout / 1000);
+            msger.info('در حال ارسال ...');
+            this._displayProgress(this);
+            // $$("#uploadDataButton").hide();
+        },
+        unset: function () {
+            this.inProgress = false;
+            // $$("#uploadDataButton").show();
+        },
+        isInProg: function () {
+            return this.inProgress;
+        },
+
+        sayWait: function () {
+            msger.info('اطلاعات در حال ارسال است لطفا صبر کنید...');
+        },
+        sayOk: function () {
+            msger.ok('ارسال موفق بود');
+        },
+        sayFail: function () {
+            msger.err('متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد');
+        }
+    };
+}
+
+function post(user, data, cmd, onSuccess, onErr, timeout) {
+    var reqData = {
+        cmd: cmd,
+        username: user.username,
+        password: user.password,
+        arg: data
+    };
+
+    console.info("sending data", TARGET_URL, reqData);
+
+    $$.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(reqData),
+        dataType: 'raw',
+        success: function (data) {
+            console.debug('Data received : ', data);
+            if (isFun(onSuccess))
+                onSuccess(data);
+        },
+        error: function (xmlhttp, err) {
+            console.error('Ajax req failed ', err);
+            if (isFun(onErr))
+                onErr(err, xmlhttp);
+        },
+        processData: false,
+        type: 'POST',
+        url: TARGET_URL,
+        timeout: timeout === undefined ? UPLOAD_TIMEOUT : timeout
+    });
+}
+
+window.hohoho = [msger, newCommInterlock, post];
 
 // --------------------------------------------------
 
@@ -123,89 +254,13 @@ function populateVisitList() {
 
 // --------------------------------------------------
 
-var upload = {
-    inProgress: false,
-    set: function () {
-        var self = this;
-        this.inProgress = true;
-        $$("#uploadDataButton").hide();
-        var remaining = Math.round(UPLOAD_TIMEOUT / 1000);
-        console.log('remain', remaining);
-
-        function displayTime() {
-            if (!self.isInProg() || --remaining < 0) {
-                return;
-            }
-            m = 'در حال ارسال ' + remaining + '...';
-            msg('info', m);
-            setTimeout(displayTime, 1000);
-        }
-
-        displayTime();
-    },
-    unset: function () {
-        this.inProgress = false;
-        $$("#uploadDataButton").show();
-    },
-    isInProg: function () {
-        return this.inProgress;
-    },
-
-    sayWait: function () {
-        msg('info', 'اطلاعات در حال ارسال است لطفا صبر کنید...');
-    },
-    sayOk: function () {
-        msg('info', 'ارسال موفق بود');
-    },
-    sayFail: function () {
-        msg('err', 'متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد');
-    }
-};
-
-var user = {
-    get: function () {
-        'use strict';
-        var data = myApp.formGetData(ID_FORM__LOGIN);
-
-        if (!data) {
-            msg('err', 'اطلاعات کاربری وارد نشده است');
-            return null;
-        }
-        if (!data.username) {
-            msg('err', 'نام کاربری وارد نشده است');
-            return null;
-        }
-        if (!data.password) {
-            msg('err', 'رمز عبور وارد نشده است');
-            return null;
-        }
-
-        return data;
-    }
-};
-
-function uploadDataToServer() {
-    if (upload.isInProg()) {
-        upload.sayWait();
-        return;
-    }
-    upload.set();
-
-    var userInfo = user.get();
-    if (userInfo === null) {
-        upload.unset();
-        return;
-    }
-
-    var reqData = {
-        items: [],
-        user: userInfo
-    };
-
+function getAllFormsData() {
+    var items = [];
     for (var visitId = 0; visitId < visitList.length; visitId++) {
         var visitData = {
             visitId: visitId,
             visitName: visitList[visitId],
+            hash: null,
             details: {
                 // Will be filled with the following logic
             }
@@ -216,37 +271,79 @@ function uploadDataToServer() {
                 var formName = 'V' + visitId + '-form' + formInfo.id;
                 var m = myApp.formGetData(formName);
                 if (m !== undefined) {
-                    console.log('Form: ' + formName + ' -> ' + m);
+                    // console.log('Form: ' + formName + ' -> ' + m);
                     visitData.details[formInfo.formId] = myApp.formGetData(formName);
                 }
             });
         });
 
-        reqData.items.push(visitData);
+        visitData.hash = md5(JSON.stringify(visitData.details));
+        items.push(visitData);
+    }
+    return items;
+}
+
+function whichFormsToUpload(forms) {
+    var ask = [];
+    for (var i = 0; i < forms.length; i++) {
+        ask.push({
+            vid: forms[i].visitId,
+            hash: forms[i].hash
+        });
+    }
+    return ask;
+}
+
+function filterOutForms(forms, vids) {
+    var f = [];
+    for (var i = 0; i < forms.length; i++) {
+        if (vids.indexOf(forms[i].visitId) >= 0) {
+            f.push(forms[i]);
+        }
+    }
+    return f;
+}
+
+function uploadDataToServer() {
+    if (upload.isInProg()) {
+        upload.sayWait();
+        return;
+    }
+    upload.set();
+
+    var u = user.get();
+    if (u === null) {
+        user.sayErr();
+        upload.unset();
+        return;
     }
 
-    console.log("sending data", reqData);
-    console.log('sending to: ', TARGET_URL);
+    var allForms = getAllFormsData();
 
-    $$.ajax({
-        contentType: 'application/json',
-        data: JSON.stringify(reqData),
-        dataType: 'raw',
-        success: function (data) {
-            console.log('Data received : ', data);
-            upload.sayOk();
-            upload.unset();
-        },
-        error: function (xmlhttp, err) {
-            console.log('Ajax req failed ', err);
-            upload.sayFail(err);
-            upload.unset();
-        },
-        processData: false,
-        type: 'POST',
-        url: TARGET_URL,
-        timeout: UPLOAD_TIMEOUT
-    });
+    function onErr(err) {
+        upload.sayFail(err);
+        upload.unset();
+    }
+
+    function onOkUpload(ans) {
+        ans = JSON.parse(ans);
+        upload.sayOk();
+        upload.unset();
+    }
+
+    function onOkWhichForms(ans) {
+        ans = JSON.parse(ans);
+        if (ans.error) {
+            msger.err(ans.error);
+            return;
+        }
+        console.log('server needs:', ans.ok);
+        var filtered = filterOutForms(allForms, ans.ok);
+        post(u, filtered, CMD_FORM_DATA, onOkUpload, onErr);
+    }
+
+    var whichForms = whichFormsToUpload(allForms);
+    post(u, whichForms, CMD_FORM_WHICH_TO_UPLOAD, onOkWhichForms, onErr);
 }
 
 // --------------------------------------------------
@@ -283,7 +380,6 @@ myApp.onPageInit('form0', function (page) {
     })
 });
 
-
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
 
@@ -300,7 +396,6 @@ myApp.onPageInit('index', function (page) {
     for (; sKey = window.localStorage.key(i); i++) {
         oJson[sKey] = window.localStorage.getItem(sKey)
     }
-    console.log(oJson)
 });
 
 myApp.onPageInit('formlist', function (page) {

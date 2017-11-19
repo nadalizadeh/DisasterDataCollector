@@ -35,3 +35,9 @@
     border: 1px solid black;
     margin-bottom: 1em;
 }
+
+
+/* For prophet toast library */
+.prophet {
+    z-index: 99999;
+}
