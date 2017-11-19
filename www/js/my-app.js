@@ -1,208 +1,266 @@
-
 var DEBUG = false;
-var TARGET_URL = DEBUG ? 'http://localhost:9090' : 'http://rootshell.ir/disaster/pushdata.php';
+// var TARGET_URL = DEBUG ? 'http://wordpress:80/cis.php' : 'http://rootshell.ir/disaster/pushdata.php';
+// var TARGET_URL = DEBUG ? 'http://localhost:9090' : 'http://rootshell.ir/disaster/pushdata.php';
+var TARGET_URL = DEBUG ? 'http://wordpress:80/cis.php' : 'http://ob.memari.online:80/cis.php';
+
 var UPLOAD_TIMEOUT = 10000;
 var ID_FORM__LOGIN = 'login-data';
+var MSG_DURATION = 4000;
 
-function msg(type, text) {
-    'use strict';
-    if(type === 'err') {
-        text = 'خطا' +
-            ': ' +
-            text;
-    }
-    $$("#toolbarMsg").text(text);
-}
+var CMD_FORM_DATA = "form_data";
+var CMD_FORM_WHICH_TO_UPLOAD = "form_data_which_to_upload";
+
 
 // --------------------------------------------------
 
 // Initialize app
 var myApp = new Framework7({
-  template7Pages: true, // enable Template7 rendering for Ajax and Dynamic pages
-  init: false, // prevent app from automatic initialization
-  template7Data: {
-  }
-})
+    template7Pages: true, // enable Template7 rendering for Ajax and Dynamic pages
+    init: false, // prevent app from automatic initialization
+    template7Data: {}
+});
 window.hahaha = myApp;
 
 Template7.global = {
-  formList: {
-    'پایه': [
-      {id: 0, formId: '0', caption: 'اطلاعات پایه'}
-    ],
-    'اجتماعی': [
-      {id: 11, formId: '1-1', caption: 'اسکان'},
-      {id: 12, formId: '1-2', caption: 'سلامت و جمعیت'},
-      {id: 13, formId: '1-3', caption: 'آموزش'},
-      {id: 14, formId: '1-4', caption: 'مواد غذایی'},
-      {id: 15, formId: '1-5', caption: 'میراث فرهنگی'},
-      {id: 16, formId: '1-6', caption: 'آداب و رسوم ویژه'}
-    ],
-    'تولیدی': [
-      {id: 21, formId: '2-1', caption: 'کشاورزی'},
-      {id: 22, formId: '2-2', caption: 'حق آبه ها'},
-      {id: 23, formId: '2-3', caption: 'صنعت و تجارت'},
-      {id: 24, formId: '2-4', caption: 'گردشگری'},
-      {id: 25, formId: '2-5', caption: 'مالی'}
-    ],
-    'زیرساختی': [
-      {id: 31, formId: '3-1', caption: 'برق'},
-      {id: 32, formId: '3-2', caption: 'مخابرات'},
-      {id: 33, formId: '3-3', caption: 'زیرساخت مخابرات'},
-      {id: 34, formId: '3-4', caption: 'حمل و نقل'},
-      {id: 35, formId: '3-5', caption: 'آب، تصفیه و بهداشت'}
-    ],
-    'مدیریتی': [
-      {id: 41, formId: '4-1', caption: 'مدیریت'},
-      {id: 42, formId: '4-2', caption: 'مرتع و محیط زیست'},
-      {id: 43, formId: '4-3', caption: 'حمایت اجتماعی'}
-    ]
-  }
-}
+    // For form 21.
+    range10: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+
+    formList: {
+        'پایه': [
+            {id: 0, formId: '0', caption: 'اطلاعات پایه'}
+        ],
+        'اجتماعی': [
+            {id: 11, formId: '1-1', caption: 'اسکان'},
+            {id: 12, formId: '1-2', caption: 'سلامت و جمعیت'},
+            {id: 13, formId: '1-3', caption: 'آموزش'},
+            {id: 14, formId: '1-4', caption: 'مواد غذایی'},
+            {id: 15, formId: '1-5', caption: 'میراث فرهنگی'},
+            {id: 16, formId: '1-6', caption: 'آداب و رسوم ویژه'}
+        ],
+        'اقتصادی': [
+            {id: 21, formId: '2-1', caption: 'کشاورزی'},
+            {id: 22, formId: '2-2', caption: 'منابع تامین آب کشاورزی'},
+            {id: 23, formId: '2-3', caption: 'صنعت و تجارت'},
+            {id: 24, formId: '2-4', caption: 'گردشگری'},
+            {id: 25, formId: '2-5', caption: 'مالی'}
+        ],
+        'زیرساختی': [
+            {id: 31, formId: '3-1', caption: 'برق'},
+            {id: 32, formId: '3-2', caption: 'مخابرات'},
+            {id: 33, formId: '3-3', caption: 'زیرساخت مخابرات'},
+            {id: 34, formId: '3-4', caption: 'حمل و نقل'},
+            {id: 35, formId: '3-5', caption: 'آب، تصفیه و بهداشت'}
+        ],
+        'مدیریتی': [
+            {id: 41, formId: '4-1', caption: 'مدیریت'},
+            {id: 42, formId: '4-2', caption: 'مرتع و محیط زیست'},
+            {id: 43, formId: '4-3', caption: 'حمایت اجتماعی'}
+        ]
+    }
+};
 
 // If we need to use custom DOM library, let's save it to $$ variable:
-var $$ = Dom7
+var $$ = Dom7;
 
 // Add view
 var mainView = myApp.addView('.view-main', {
-  // Because we want to use dynamic navbar, we need to enable it for this view:
-  dynamicNavbar: true
-})
+    // Because we want to use dynamic navbar, we need to enable it for this view:
+    dynamicNavbar: true
+});
 
 // --------------------------------------------------
 
-var visitList = []
-
-function saveVisitList () {
-  window.localStorage.setItem('visitList', JSON.stringify(visitList))
+function isFun(f) {
+    return typeof f === "function";
 }
 
-function getVisitList () {
-  var visitListStr = window.localStorage.getItem('visitList')
-  if (visitListStr === undefined || visitListStr == null) {
-    visitList = []
-  } else {
-    try {
-      visitList = JSON.parse(visitListStr)
-    } catch (err) {
-      console.log(err)
-      visitList = []
-    }
-  }
-  // alert('list: ' + JSON.stringify(visitList))
-  return visitList
-}
+var msger = {
+    ERR: 'error',
+    OK: 'success',
+    INFO: 'default',
+    m: null,
+    msg: function (type, text, showToast) {
+        if (type === this.ERR)
+            text = 'خطا' + ': ' + text;
 
-function addVisit (visitName) {
-  visitList.push(visitName)
-  saveVisitList()
-}
+        showToast = typeof showToast === 'undefined' || showToast;
+        if (showToast)
+            var toast = new Message(text, {type: type, duration: MSG_DURATION}).show();
 
-function addVisitButtonClicked () {
-  addVisit('بازدید ' + (visitList.length + 1))
-  populateVisitList()
-}
-
-function getHTMLForVisit (id, visitName) {
-  return '<li><a href="formlist.html?visitId=' + id + '" data-context=\'{"visitId": ' + id + ', "visitName": "' + visitName + '"}\' class="item-link item-content">' +
-            '<div class="item-inner">' +
-              '<div class="item-title">' + visitName + '</div>' +
-            '</div></a></li>'
-}
-
-function populateVisitList () {
-  // window.localStorage.clear()
-  getVisitList()
-  var thehtml = ''
-  for (var i = 0; i < visitList.length; i++) {
-    thehtml += getHTMLForVisit(i, visitList[i])
-  }
-  $$('#visit-listblock > ul').html(thehtml)
-}
-
-// --------------------------------------------------
-
-var upload = {
-    inProgress: false,
-    set: function () {
-        var self = this;
-        this.inProgress = true;
-        $$("#uploadDataButton").hide();
-        var remaining = Math.round(UPLOAD_TIMEOUT / 1000);
-        console.log('remain', remaining);
-        function displayTime() {
-            if(!self.isInProg() || --remaining < 0) {
-                return;
-            }
-            m = 'در حال ارسال ' + remaining + '...';
-            msg('info', m);
-            setTimeout(displayTime, 1000);
-        }
-        displayTime();
+        $$("#toolbarMsg").text(text);
     },
-    unset: function () {
-        this.inProgress = false;
-        $$("#uploadDataButton").show();
+    err: function (text, showToast) {
+        this.msg(this.ERR, text, showToast);
     },
-    isInProg: function () {
-        return this.inProgress;
+    ok: function (text, showToast) {
+        this.msg(this.OK, text, showToast);
     },
-
-    sayWait: function () {
-        msg('info', 'اطلاعات در حال ارسال است لطفا صبر کنید...');
-    },
-    sayOk: function () {
-        msg('info', 'ارسال موفق بود');
-    },
-    sayFail: function () {
-        msg('err', 'متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد');
+    info: function (text, showToast) {
+        this.msg(this.INFO, text, showToast);
     }
 };
 
 var user = {
+    err: '',
     get: function () {
-        'use strict';
         var data = myApp.formGetData(ID_FORM__LOGIN);
 
-        if(!data) {
-            msg('err', 'اطلاعات کاربری وارد نشده است');
+        if (!data) {
+            this.err = 'اطلاعات کاربری وارد نشده است';
             return null;
         }
-        if(!data.username) {
-            msg('err', 'نام کاربری وارد نشده است');
+        if (!data.username) {
+            this.err = 'نام کاربری وارد نشده است';
             return null;
         }
-        if(!data.password) {
-            msg('err', 'رمز عبور وارد نشده است');
+        if (!data.password) {
+            this.err = 'رمز عبور وارد نشده است';
             return null;
         }
 
         return data;
+    },
+    sayErr: function () {
+        msger.err(this.err);
     }
 };
 
-function uploadDataToServer () {
-    if(upload.isInProg()) {
-        upload.sayWait();
-        return;
-    }
-    upload.set();
+var upload = newCommInterlock(UPLOAD_TIMEOUT);
 
-    var userInfo = user.get();
-    if(userInfo === null) {
-        upload.unset();
-        return;
-    }
+function newCommInterlock(timeout) {
+    return {
+        remaining: 0,
+        inProgress: false,
 
+        _displayProgress: function (self) {
+            if (!self.inProgress || --self.remaining < 0)
+                return;
+
+            var m = 'در حال ارسال: ' + self.remaining + '...';
+            msger.info(m, false);
+            setTimeout(self._displayProgress, 1000, self);
+        },
+
+        set: function () {
+            this.inProgress = true;
+            this.remaining = Math.round(timeout / 1000);
+            msger.info('در حال ارسال ...');
+            this._displayProgress(this);
+            // $$("#uploadDataButton").hide();
+        },
+        unset: function () {
+            this.inProgress = false;
+            // $$("#uploadDataButton").show();
+        },
+        isInProg: function () {
+            return this.inProgress;
+        },
+
+        sayWait: function () {
+            msger.info('اطلاعات در حال ارسال است لطفا صبر کنید...');
+        },
+        sayOk: function () {
+            msger.ok('ارسال موفق بود');
+        },
+        sayFail: function () {
+            msger.err('متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد');
+        }
+    };
+}
+
+function post(user, data, cmd, onSuccess, onErr, timeout) {
     var reqData = {
-        items: [],
-        user: userInfo
+        cmd: cmd,
+        username: user.username,
+        password: user.password,
+        arg: data
     };
 
+    console.info("sending data", TARGET_URL, reqData);
+
+    $$.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(reqData),
+        dataType: 'raw',
+        success: function (data) {
+            console.debug('Data received : ', data);
+            if (isFun(onSuccess))
+                onSuccess(data);
+        },
+        error: function (xmlhttp, err) {
+            console.error('Ajax req failed ', err);
+            if (isFun(onErr))
+                onErr(err, xmlhttp);
+        },
+        processData: false,
+        type: 'POST',
+        url: TARGET_URL,
+        timeout: timeout === undefined ? UPLOAD_TIMEOUT : timeout
+    });
+}
+
+window.hohoho = [msger, newCommInterlock, post];
+
+// --------------------------------------------------
+
+var visitList = [];
+
+function saveVisitList() {
+    window.localStorage.setItem('visitList', JSON.stringify(visitList))
+}
+
+function getVisitList() {
+    var visitListStr = window.localStorage.getItem('visitList');
+    if (visitListStr === undefined || visitListStr === null) {
+        visitList = []
+    } else {
+        try {
+            visitList = JSON.parse(visitListStr)
+        } catch (err) {
+            console.log(err);
+            visitList = [];
+        }
+    }
+    // alert('list: ' + JSON.stringify(visitList))
+    return visitList
+}
+
+function addVisit(visitName) {
+    visitList.push(visitName);
+    saveVisitList()
+}
+
+function addVisitButtonClicked() {
+    addVisit('بازدید ' + (visitList.length + 1));
+    populateVisitList()
+}
+
+function getHTMLForVisit(id, visitName) {
+    return '<li><a href="formlist.html?visitId=' + id + '" data-context=\'{"visitId": ' + id + ', "visitName": "' + visitName + '"}\' class="item-link item-content">' +
+        '<div class="item-inner">' +
+        '<div class="item-title">' + visitName + '</div>' +
+        '</div></a></li>'
+}
+
+function populateVisitList() {
+    // window.localStorage.clear()
+    getVisitList();
+    var thehtml = '';
+    for (var i = 0; i < visitList.length; i++) {
+        thehtml += getHTMLForVisit(i, visitList[i])
+    }
+    $$('#visit-listblock > ul').html(thehtml)
+}
+
+// --------------------------------------------------
+
+function getAllFormsData() {
+    var items = [];
     for (var visitId = 0; visitId < visitList.length; visitId++) {
         var visitData = {
             visitId: visitId,
             visitName: visitList[visitId],
+            hash: null,
             details: {
                 // Will be filled with the following logic
             }
@@ -213,112 +271,152 @@ function uploadDataToServer () {
                 var formName = 'V' + visitId + '-form' + formInfo.id;
                 var m = myApp.formGetData(formName);
                 if (m !== undefined) {
-                    console.log('Form: ' + formName + ' -> ' + m);
+                    // console.log('Form: ' + formName + ' -> ' + m);
                     visitData.details[formInfo.formId] = myApp.formGetData(formName);
                 }
             });
         });
 
-        reqData.items.push(visitData);
+        visitData.hash = md5(JSON.stringify(visitData.details));
+        items.push(visitData);
+    }
+    return items;
+}
+
+function whichFormsToUpload(forms) {
+    var ask = [];
+    for (var i = 0; i < forms.length; i++) {
+        ask.push({
+            vid: forms[i].visitId,
+            hash: forms[i].hash
+        });
+    }
+    return ask;
+}
+
+function filterOutForms(forms, vids) {
+    var f = [];
+    for (var i = 0; i < forms.length; i++) {
+        if (vids.indexOf(forms[i].visitId) >= 0) {
+            f.push(forms[i]);
+        }
+    }
+    return f;
+}
+
+function uploadDataToServer() {
+    if (upload.isInProg()) {
+        upload.sayWait();
+        return;
+    }
+    upload.set();
+
+    var u = user.get();
+    if (u === null) {
+        user.sayErr();
+        upload.unset();
+        return;
     }
 
-    console.log("sending data", reqData);
-    console.log('sending to: ', TARGET_URL);
+    var allForms = getAllFormsData();
 
-    $$.ajax({
-        contentType: 'application/json',
-        data: JSON.stringify(reqData),
-        dataType: 'raw',
-        success: function (data) {
-            console.log('Data received : ', data);
-            upload.sayOk();
-            upload.unset();
-        },
-        error: function (xmlhttp, err) {
-            console.log('Ajax req failed ', err);
-            upload.sayFail(err);
-            upload.unset();
-        },
-        processData: false,
-        type: 'POST',
-        url: TARGET_URL,
-        timeout: UPLOAD_TIMEOUT
-    });
+    function onErr(err) {
+        upload.sayFail(err);
+        upload.unset();
+    }
+
+    function onOkUpload(ans) {
+        ans = JSON.parse(ans);
+        upload.sayOk();
+        upload.unset();
+    }
+
+    function onOkWhichForms(ans) {
+        ans = JSON.parse(ans);
+        if (ans.error) {
+            msger.err(ans.error);
+            return;
+        }
+        console.log('server needs:', ans.ok);
+        var filtered = filterOutForms(allForms, ans.ok);
+        post(u, filtered, CMD_FORM_DATA, onOkUpload, onErr);
+    }
+
+    var whichForms = whichFormsToUpload(allForms);
+    post(u, whichForms, CMD_FORM_WHICH_TO_UPLOAD, onOkWhichForms, onErr);
 }
 
 // --------------------------------------------------
 
 myApp.onPageInit('form0', function (page) {
-  $$('#roosta').change(function (e) {
-    var visitId = $$(e.target).data('visitid')
-    visitList[visitId] = e.target.value
-    saveVisitList()
-  })
-  $$('#receiveDataFromGPSButton').click(function (e) {
-    // onSuccess Callback
-    // This method accepts a Position object, which contains the
-    // current GPS coordinates
-    //
-    var onGeoSuccess = function (position) {
-      $$('#latitude').val(position.coords.latitude)
-      $$('#longitude').val(position.coords.longitude)
-  //    'Accuracy: '          + position.coords.accuracy          + '\n' +
-  //    'Timestamp: '         + position.timestamp                + '\n')
-    }
+    $$('#roosta').change(function (e) {
+        var visitId = $$(e.target).data('visitid');
+        visitList[visitId] = e.target.value;
+        saveVisitList()
+    });
+    $$('#receiveDataFromGPSButton').click(function (e) {
+        // onSuccess Callback
+        // This method accepts a Position object, which contains the
+        // current GPS coordinates
+        //
+        var onGeoSuccess = function (position) {
+            $$('#latitude').val(position.coords.latitude);
+            $$('#longitude').val(position.coords.longitude)
+            //    'Accuracy: '          + position.coords.accuracy          + '\n' +
+            //    'Timestamp: '         + position.timestamp                + '\n')
+        };
 
-    // onError Callback receives a PositionError object
-    //
-    function onGeoError (error) {
-      alert('code: ' + error.code + '\n' +
-      'message: ' + error.message + '\n')
-    }
+        // onError Callback receives a PositionError object
+        //
+        function onGeoError(error) {
+            alert('code: ' + error.code + '\n' +
+                'message: ' + error.message + '\n')
+        }
 
-    // myVar = setTimeout(alertFunc, 3000);
+        // myVar = setTimeout(alertFunc, 3000);
 
-    $$('#latitude').val('در حال دریافت')
-    navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError)
-  })
-})
-
+        $$('#latitude').val('در حال دریافت');
+        navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError)
+    })
+});
 
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
 
-})
+});
 
 myApp.onPageInit('index', function (page) {
-  populateVisitList()
-  $$('#addVisitButton').click(addVisitButtonClicked)
-  $$('#uploadDataButton').click(uploadDataToServer)
+    populateVisitList();
+    $$('#addVisitButton').click(addVisitButtonClicked);
+    $$('#uploadDataButton').click(uploadDataToServer);
 
-  var i = 0,
-      oJson = {},
-      sKey;
-  for (; sKey = window.localStorage.key(i); i++) {
-      oJson[sKey] = window.localStorage.getItem(sKey)
-  }
-  console.log(oJson)
-})
+    var i = 0,
+        oJson = {},
+        sKey;
+    for (; sKey = window.localStorage.key(i); i++) {
+        oJson[sKey] = window.localStorage.getItem(sKey)
+    }
+});
 
 myApp.onPageInit('formlist', function (page) {
-  // populateFormList()
-})
+    // populateFormList()
+});
 
 // Option 2. Using one 'pageInit' event handler for all pages:
 $$(document).on('pageInit', function (e) {
-  // Get page data from event data
-  var page = e.detail.page
+    // Get page data from event data
+    var page = e.detail.page;
 
-  if (page.name === 'index') {
-    // Following code will be executed for page with data-page attribute equal to "about"
-    // myApp.alert('Here comes About page');
-  }
-})
+    if (page.name === 'index') {
+        // Following code will be executed for page with data-page attribute equal to "about"
+        // myApp.alert('Here comes About page');
+    }
+});
 
 // Option 2. Using live 'pageInit' event handlers for each page
 $$(document).on('pageInit', '.page[data-page="about"]', function (e) {
-  // Following code will be executed for page with data-page attribute equal to "about"
-  // myApp.alert('Here comes About page');
-})
+    // Following code will be executed for page with data-page attribute equal to "about"
+    // myApp.alert('Here comes About page');
+});
 
-myApp.init()
+myApp.init();

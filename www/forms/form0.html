@@ -23,6 +23,7 @@
             <div class="content-block-title">اطلاعات پایه‌ی منطقه</div>
             <h4>هدف: اطلاعات بخش اول شناسنامه هر روستا به شمار می‌رود. درج غلط این اطلاعات باعث از دست رفتن تمامی
                 اطلاعات بخش دوم می‌شود لذا در صحت درج اطلاعات در این بخش کمال دقت را به‌کارگیرید.</h4>
+
             <form id="V{{visitId}}-form{{id}}" class="list-block store-data">
                 <ul>
                     <li>
@@ -299,6 +300,88 @@
                     </li>
                 </ul>
 
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">اطلاعات معتمد - نام</div>
+                                <div class="item-input">
+                                    <input type="text"
+                                           name="motamed-name-0"
+                                           id="motamed-name-0"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">اطلاعات معتمد - شماره تماس</div>
+                                <div class="item-input">
+                                    <input type="text"
+                                           name="motamed-contact-0"
+                                           id="motamed-contact-0"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">اطلاعات معتمد - آدرس</div>
+                                <div class="item-input">
+                                    <input type="text"
+                                           name="motamed-addr-0"
+                                           id="motamed-addr-0"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">اطلاعات معتمد دو - نام</div>
+                                <div class="item-input">
+                                    <input type="text"
+                                           name="motamed-name-1"
+                                           id="motamed-name-1"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">اطلاعات معتمد دو - شماره تماس</div>
+                                <div class="item-input">
+                                    <input type="text"
+                                           name="motamed-contact-1"
+                                           id="motamed-contact-1"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">اطلاعات معتمد دو - آدرس</div>
+                                <div class="item-input">
+                                    <input type="text"
+                                           name="motamed-addr-1"
+                                           id="motamed-addr-1"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
                 <div class="content-block-title">GPS Location</div>
                 <ul>
                     <li>
@@ -307,7 +390,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">طول جغرافیایی</div>
                                 <div class="item-input">
-                                    <input type="email" name="latitude" id="latitude" placeholder="Latitude">
+                                    <input type="text" name="latitude" id="latitude" placeholder="Latitude">
                                 </div>
                             </div>
                         </div>
@@ -318,7 +401,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">عرض جغرافیایی</div>
                                 <div class="item-input">
-                                    <input type="email" name="longitude" id="longitude" placeholder="Longitude">
+                                    <input type="text" name="longitude" id="longitude" placeholder="Longitude">
                                 </div>
                             </div>
                         </div>
@@ -327,6 +410,29 @@
                 <p><a href="#" style="direction: rtl" class="button button-big button-round"
                       id="receiveDataFromGPSButton">دریافت از GPS دستگاه</a></p>
 
+                <div>
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">
+                                        در صورتی که توضیحی نیاز است در این قسمت وارد کنید
+                                    </div>
+                                    <div class="item-input">
+                                        <input type="text"
+                                               name="extra-by-payeshgar"
+                                               id=extra-by-payeshgar0"
+                                               placeholder="سایر توضیحات">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </form>
+
+            <div class="help">
                 <p>
                     در این بخش لطفاً با توجه به اطلاعات کسب‌شده از آگاه‌ترین فرد در دسترس (ترجیحاً دهیار یا اعضای شورای
                     روستا و معتمدین محلی) نام روستا (با املای صحیح عرفی) و موقعیت آن در تقسیمات کشور را درج نمایید.
@@ -334,7 +440,7 @@
                     در بخش اطلاعات فرد ساکن و معتمد محلی ترجیحاً دو عدد شماره موبایل (اصلی و جایگزین در صورت عدم پاسخ)
                     دریافت و پس از اطمینان از صحت شماره آن‌ها را ثبت نمایید
                 </p>
-            </form>
+            </div>
         </div>
     </div>
 </div>

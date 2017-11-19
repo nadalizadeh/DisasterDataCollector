@@ -29,3 +29,15 @@
         padding: 5em;;
     }
 }
+
+/* For form21 */
+.inner-ul-section > ul > li {
+    border: 1px solid black;
+    margin-bottom: 1em;
+}
+
+
+/* For prophet toast library */
+.prophet {
+    z-index: 99999;
+}

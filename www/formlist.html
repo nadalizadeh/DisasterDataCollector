@@ -2,38 +2,41 @@
 
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="left">
-      <a href="#" class="back link">
-        <i class="icon icon-back"></i>
-        <span>Back</span>
-      </a>
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">{{visitName}}</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
     </div>
-    <div class="center sliding">{{visitName}}</div>
-    <div class="right">
-      <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-    </div>
-  </div>
 </div>
 
 <div class="pages">
-  <div data-page="formlist" class="page">
-    <div class="page-content">
-      {{#each @global.formList}}
-      <div class="content-block-title">{{@key}}</div>
-      <div class="list-block" id="formlist-listblock">
-        <ul>
-          {{#each this}}
-          <li><a href="forms/form{{this.id}}.html" class="item-link item-content" data-context='{ "id": {{this.id}}, "caption": "{{this.caption}}", "visitId": "{{@root.visitId}}" }'>
-              <div class="item-inner">
-                <div class="item-title">{{this.caption}}</div>
-                <div class="item-after">{{this.formId}}</div>
-              </div>
-          </a></li>
-          {{/each}}
-        </ul>
-      </div>
-      {{/each}}
+    <div data-page="formlist" class="page">
+        <div class="page-content">
+            {{#each @global.formList}}
+            <div class="content-block-title">{{@key}}</div>
+            <div class="list-block" id="formlist-listblock">
+                <ul>
+                    {{#each this}}
+                    <li>
+                        <a href="forms/form{{this.id}}.html" class="item-link item-content"
+                           data-context='{ "id": {{this.id}}, "caption": "{{this.caption}}", "visitId": "{{@root.visitId}}" }'>
+                            <div class="item-inner">
+                                <div class="item-title">{{this.caption}}</div>
+                                <div class="item-after">{{this.formId}}</div>
+                            </div>
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/each}}
+        </div>
     </div>
-  </div>
 </div>
