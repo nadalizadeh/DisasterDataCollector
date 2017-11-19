@@ -1,7 +1,8 @@
 var DEBUG = false;
-// var TARGET_URL = DEBUG ? 'http://wordpress:80/cis.php' : 'http://rootshell.ir/disaster/pushdata.php';
-// var TARGET_URL = DEBUG ? 'http://localhost:9090' : 'http://rootshell.ir/disaster/pushdata.php';
-var TARGET_URL = DEBUG ? 'http://wordpress:80/cis.php' : 'http://ob.memari.online:80/cis.php';
+// var TARGET_URL =  'http://rootshell.ir/disaster/pushdata.php';
+// var TARGET_URL = 'http://localhost:9090';
+var TARGET_URL = 'http://wordpress:80/cis.php';
+// var TARGET_URL = 'http://ob.memari.online:80/cis.php';
 
 var UPLOAD_TIMEOUT = 10000;
 var ID_FORM__LOGIN = 'login-data';
@@ -73,6 +74,8 @@ var mainView = myApp.addView('.view-main', {
 function isFun(f) {
     return typeof f === "function";
 }
+
+var visitList = [];
 
 var msger = {
     ERR: 'error',
@@ -199,11 +202,15 @@ function post(user, data, cmd, onSuccess, onErr, timeout) {
     });
 }
 
-window.hohoho = [msger, newCommInterlock, post];
+window.hohoho = {
+    msger: msger,
+    newCommInterLock: newCommInterlock,
+    post: post,
+    getAllFormData: getAllFormsData,
+    getVisitList: getVisitList,
+};
 
 // --------------------------------------------------
-
-var visitList = [];
 
 function saveVisitList() {
     window.localStorage.setItem('visitList', JSON.stringify(visitList))
@@ -213,15 +220,16 @@ function getVisitList() {
     var visitListStr = window.localStorage.getItem('visitList');
     if (visitListStr === undefined || visitListStr === null) {
         visitList = []
-    } else {
+    }
+    else {
         try {
             visitList = JSON.parse(visitListStr)
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
             visitList = [];
         }
     }
-    // alert('list: ' + JSON.stringify(visitList))
     return visitList
 }
 
@@ -271,7 +279,6 @@ function getAllFormsData() {
                 var formName = 'V' + visitId + '-form' + formInfo.id;
                 var m = myApp.formGetData(formName);
                 if (m !== undefined) {
-                    // console.log('Form: ' + formName + ' -> ' + m);
                     visitData.details[formInfo.formId] = myApp.formGetData(formName);
                 }
             });
@@ -337,7 +344,7 @@ function uploadDataToServer() {
             msger.err(ans.error);
             return;
         }
-        console.log('server needs:', ans.ok);
+        console.debug('server needs:', ans.ok);
         var filtered = filterOutForms(allForms, ans.ok);
         post(u, filtered, CMD_FORM_DATA, onOkUpload, onErr);
     }
