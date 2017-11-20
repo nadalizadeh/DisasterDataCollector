@@ -13,6 +13,8 @@ var CMD_FORM_WHICH_TO_UPLOAD = "form_data_which_to_upload";
 
 var STORAGE_KEY = 'crisis_storate';
 
+var WORKAROUND_TIMEOUT = 300;
+
 
 // --------------------------------------------------
 
@@ -143,7 +145,7 @@ function newCommInterlock(timeout) {
 
             var m = 'در حال ارسال: ' + self.remaining + '...';
             msger.info(m, false);
-            setTimeout(self._displayProgress, 1000, self);
+            setTimeout(self._displayProgress, WORKAROUND_TIMEOUT, self);
         },
 
         set: function () {
@@ -328,7 +330,7 @@ function reloadForm(vid, idid, f) {
 }
 
 function initSaveForm() {
-    $('#remove-me-on-load').hide();
+    $('#remove-me-on-load').text('بارگذاری شد.');
     var f = null;
     var vid = null;
     var idid = null;
