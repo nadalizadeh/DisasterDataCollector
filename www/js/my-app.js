@@ -168,8 +168,11 @@ function newCommInterlock(timeout) {
         sayOk: function () {
             msger.ok('ارسال موفق بود');
         },
-        sayFail: function () {
+        sayFail: function (mmm) {
             msger.err('متاسفانه ارسال اطلاعات به سرور با خطا روبرو شد');
+            if (mmm) {
+                msger.err(mmm);
+            }
         }
     };
 }
@@ -287,10 +290,7 @@ function crisisSetStore(store) {
 }
 
 function saveForm(vid, idid, f) {
-    console.log('saving');
-    console.log('vid', vid);
-    console.log('idid', idid);
-    console.log('f', f);
+    console.log('saving', vid, idid, f);
     var $f = $(f);
     var formData = {};
     $f.find('input').each(function (i, self) {
@@ -359,8 +359,14 @@ function initSaveForm() {
         reloadForm(vid, idid, f);
     }
 
-    $$('.save-form').on('click', onChange);
-    $$('.reload-form').on('click', onReload);
+    $$('.save-form').on('click', function () {
+        onChange();
+        msger.msg(msger.OK, 'ذخیره شد');
+    });
+    $$('.reload-form').on('click', function () {
+        onReload();
+        msger.msg(msger.OK, 'بارگذاری شد');
+    });
     var $f = $(f);
     $f.find('input').each(function (i, self) {
         $(self).change(onChange);
@@ -461,23 +467,31 @@ function uploadDataToServer() {
 
     function onOkUpload(ans) {
         ans = JSON.parse(ans);
-        upload.sayOk();
+        if (ans.error) {
+            console.log(ans.error);
+            upload.sayFail(ans.error);
+        }
+        else {
+            upload.sayOk();
+        }
         upload.unset();
     }
 
-    function onOkWhichForms(ans) {
-        ans = JSON.parse(ans);
-        if (ans.error) {
-            msger.err(ans.error);
-            return;
-        }
-        console.debug('server needs:', ans.ok);
-        var filtered = filterOutForms(allForms, ans.ok);
-        post(u, filtered, CMD_FORM_DATA, onOkUpload, onErr);
-    }
+    post(u, allForms, CMD_FORM_DATA, onOkUpload, onErr);
 
-    var whichForms = whichFormsToUpload(allForms);
-    post(u, whichForms, CMD_FORM_WHICH_TO_UPLOAD, onOkWhichForms, onErr);
+    // function onOkWhichForms(ans) {
+    //     ans = JSON.parse(ans);
+    //     if (ans.error) {
+    //         msger.err(ans.error);
+    //         return;
+    //     }
+    //     console.debug('server needs:', ans.ok);
+    //     var filtered = filterOutForms(allForms, ans.ok);
+    //     post(u, filtered, CMD_FORM_DATA, onOkUpload, onErr);
+    // }
+
+    // var whichForms = whichFormsToUpload(allForms);
+    // post(u, whichForms, CMD_FORM_WHICH_TO_UPLOAD, onOkWhichForms, onErr);
 }
 
 // --------------------------------------------------
