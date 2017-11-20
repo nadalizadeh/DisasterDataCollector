@@ -1,8 +1,8 @@
 var DEBUG = false;
 // var TARGET_URL =  'http://rootshell.ir/disaster/pushdata.php';
 // var TARGET_URL = 'http://localhost:9090';
-var TARGET_URL = 'http://wordpress:80/cis.php';
-// var TARGET_URL = 'http://ob.memari.online:80/cis.php';
+//var TARGET_URL = 'http://wordpress:80/cis.php';
+var TARGET_URL = 'http://ob.memari.online:80/cis.php';
 
 var UPLOAD_TIMEOUT = 10000;
 var ID_FORM__LOGIN = 'login-data';
@@ -10,6 +10,8 @@ var MSG_DURATION = 4000;
 
 var CMD_FORM_DATA = "form_data";
 var CMD_FORM_WHICH_TO_UPLOAD = "form_data_which_to_upload";
+
+var STORAGE_KEY = 'crisis_storate';
 
 
 // --------------------------------------------------
@@ -202,14 +204,6 @@ function post(user, data, cmd, onSuccess, onErr, timeout) {
     });
 }
 
-window.hohoho = {
-    msger: msger,
-    newCommInterLock: newCommInterlock,
-    post: post,
-    getAllFormData: getAllFormsData,
-    getVisitList: getVisitList,
-};
-
 // --------------------------------------------------
 
 function saveVisitList() {
@@ -260,33 +254,167 @@ function populateVisitList() {
     $$('#visit-listblock > ul').html(thehtml)
 }
 
+
+// --------------------------------------------------
+
+function crisisGetStore() {
+    var store = window.localStorage.getItem(STORAGE_KEY);
+
+    if (!store || store === null || store === undefined) {
+        store = {};
+    }
+    else {
+        try {
+            store = JSON.parse(store);
+        }
+        catch (ex) {
+            console.error('failed to get store from local storage', ex);
+            store = {};
+        }
+    }
+    if (!store || store === null || store === undefined) {
+        store = {};
+    }
+
+    store.formsData = (store.formsData && typeof store.formsData === "object") ? store.formsData : {};
+
+    return store;
+}
+
+function crisisSetStore(store) {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+}
+
+function saveForm(vid, idid, f) {
+    console.log('saving');
+    console.log('vid', vid);
+    console.log('idid', idid);
+    console.log('f', f);
+    var $f = $(f);
+    var formData = {};
+    $f.find('input').each(function (i, self) {
+        formData[self.id] = $(self).val();
+    });
+    $f.find('select').each(function (i, self) {
+        formData[self.id] = $(self).val();
+    });
+
+    var store = crisisGetStore();
+    if (!store.formsData[vid])
+        store.formsData[vid] = {};
+    if (!store.formsData[vid][idid])
+        store.formsData[vid][idid] = {};
+    store.formsData[vid][idid] = formData;
+
+    crisisSetStore(store);
+}
+
+function reloadForm(vid, idid, f) {
+    console.log('reloading form', vid, idid, f);
+    var formsData = crisisGetStore().formsData;
+    if (!formsData[vid] || !formsData[vid][idid]) {
+        console.log('no data for form', vid, idid, f);
+        return;
+    }
+    var fdata = formsData[vid][idid];
+    console.log("data", fdata);
+    var $f = $(f);
+    $f.find('input').each(function (i, self) {
+        $(self).val(fdata[self.id]);
+    });
+    $f.find('select').each(function (i, self) {
+        $(self).val(fdata[self.id]);
+    });
+}
+
+function initSaveForm() {
+    $('#remove-me-on-load').hide();
+    var f = null;
+    var vid = null;
+    var idid = null;
+    $('form').each(function (i, fff) {
+        if (f !== null)
+            return;
+        if (!fff.dataset)
+            return;
+        ds = fff.dataset;
+        if (ds["saveme"] === "please" && ds['vid'] && ds['idid']) {
+            f = fff;
+            vid = ds['vid'];
+            idid = ds['idid'];
+        }
+    });
+
+    if (!f) {
+        console.log('form not found!!!!');
+        return;
+    }
+    console.log('init form', vid, idid, f);
+
+    function onChange() {
+        saveForm(vid, idid, f);
+    }
+
+    function onReload() {
+        console.log('reload button');
+        reloadForm(vid, idid, f);
+    }
+
+    $$('.save-form').on('click', onChange);
+    $$('.reload-form').on('click', onReload);
+    var $f = $(f);
+    $f.find('input').each(function (i, self) {
+        $(self).change(onChange);
+    });
+    $f.find('select').each(function (i, self) {
+        $(self).change(onChange);
+    });
+
+    reloadForm(vid, idid, f);
+}
+
 // --------------------------------------------------
 
 function getAllFormsData() {
     var items = [];
-    for (var visitId = 0; visitId < visitList.length; visitId++) {
+    var fd = crisisGetStore().formsData;
+    var visitIds = Object.keys(fd);
+    for (var i = 0; i < visitIds.length; i++) {
+        var vid = visitIds[i];
         var visitData = {
-            visitId: visitId,
-            visitName: visitList[visitId],
+            visitId: vid,
             hash: null,
-            details: {
-                // Will be filled with the following logic
-            }
+            details: JSON.stringify(fd[vid])
         };
-
-        Object.keys(Template7.global.formList).forEach(function (currentValue, catIndex, arr) {
-            Template7.global.formList[currentValue].forEach(function (formInfo, index2, arr) {
-                var formName = 'V' + visitId + '-form' + formInfo.id;
-                var m = myApp.formGetData(formName);
-                if (m !== undefined) {
-                    visitData.details[formInfo.formId] = myApp.formGetData(formName);
-                }
-            });
-        });
-
         visitData.hash = md5(JSON.stringify(visitData.details));
         items.push(visitData);
     }
+
+    // for (var visitId = 0; visitId < visitList.length; visitId++) {
+    //     var visitData = {
+    //         visitId: visitId,
+    //         visitName: visitList[visitId],
+    //         hash: null,
+    //         details: {
+    //             // Will be filled with the following logic
+    //         }
+    //     };
+    //
+    //     Object.keys(Template7.global.formList).forEach(function (currentValue, catIndex, arr) {
+    //         Template7.global.formList[currentValue].forEach(function (formInfo, index2, arr) {
+    //             var formName = 'V' + visitId + '-form' + formInfo.id;
+    //             var m = myApp.formGetData(formName);
+    //             if (m !== undefined) {
+    //                 visitData.details[formInfo.formId] = myApp.formGetData(formName);
+    //             }
+    //         });
+    //     });
+    //
+    //     visitData.hash = md5(JSON.stringify(visitData.details));
+    //     items.push(visitData);
+    // }
+    //
+
     return items;
 }
 
@@ -396,34 +524,42 @@ myApp.onPageInit('index', function (page) {
     populateVisitList();
     $$('#addVisitButton').click(addVisitButtonClicked);
     $$('#uploadDataButton').click(uploadDataToServer);
-
-    var i = 0,
-        oJson = {},
-        sKey;
-    for (; sKey = window.localStorage.key(i); i++) {
-        oJson[sKey] = window.localStorage.getItem(sKey)
-    }
+    // var i = 0,
+    //     oJson = {},
+    //     sKey;
+    // for (; sKey = window.localStorage.key(i); i++) {
+    //     oJson[sKey] = window.localStorage.getItem(sKey)
+    // }
 });
 
-myApp.onPageInit('formlist', function (page) {
-    // populateFormList()
+// myApp.onPageInit('formlist', function (page) {
+//     // populateFormList()
+// });
+
+
+Object.keys(Template7.global.formList).forEach(function (a0, a1, a2) {
+    Template7.global.formList[a0].forEach(function (formInfo, a4, a5) {
+        myApp.onPageInit('form' + formInfo.id, function (page) {
+            setTimeout(initSaveForm, 1000);
+        });
+    });
 });
 
 // Option 2. Using one 'pageInit' event handler for all pages:
 $$(document).on('pageInit', function (e) {
+
     // Get page data from event data
-    var page = e.detail.page;
-
-    if (page.name === 'index') {
-        // Following code will be executed for page with data-page attribute equal to "about"
-        // myApp.alert('Here comes About page');
-    }
+    // var page = e.detail.page;
+    // if (page.name === 'index') {
+    //     // Following code will be executed for page with data-page attribute equal to "about"
+    //     // myApp.alert('Here comes About page');
+    // }
 });
 
-// Option 2. Using live 'pageInit' event handlers for each page
-$$(document).on('pageInit', '.page[data-page="about"]', function (e) {
-    // Following code will be executed for page with data-page attribute equal to "about"
-    // myApp.alert('Here comes About page');
-});
+// // Option 2. Using live 'pageInit' event handlers for each page
+// $$(document).on('pageInit', '.page[data-page="about"]', function (e) {
+//     // Following code will be executed for page with data-page attribute equal to "about"
+//     // myApp.alert('Here comes About page');
+// });
 
 myApp.init();
