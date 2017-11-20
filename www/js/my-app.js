@@ -13,7 +13,7 @@ var CMD_FORM_WHICH_TO_UPLOAD = "form_data_which_to_upload";
 
 var STORAGE_KEY = 'crisis_storate';
 
-var WORKAROUND_TIMEOUT = 300;
+var WORKAROUND_TIMEOUT = 500;
 
 
 // --------------------------------------------------
@@ -145,7 +145,7 @@ function newCommInterlock(timeout) {
 
             var m = 'در حال ارسال: ' + self.remaining + '...';
             msger.info(m, false);
-            setTimeout(self._displayProgress, WORKAROUND_TIMEOUT, self);
+            setTimeout(self._displayProgress, 1000, self);
         },
 
         set: function () {
@@ -153,7 +153,6 @@ function newCommInterlock(timeout) {
             this.remaining = Math.round(timeout / 1000);
             msger.info('در حال ارسال ...');
             this._displayProgress(this);
-            // $$("#uploadDataButton").hide();
         },
         unset: function () {
             this.inProgress = false;
@@ -312,14 +311,12 @@ function saveForm(vid, idid, f) {
 }
 
 function reloadForm(vid, idid, f) {
-    console.log('reloading form', vid, idid, f);
     var formsData = crisisGetStore().formsData;
     if (!formsData[vid] || !formsData[vid][idid]) {
         console.log('no data for form', vid, idid, f);
         return;
     }
     var fdata = formsData[vid][idid];
-    console.log("data", fdata);
     var $f = $(f);
     $f.find('input').each(function (i, self) {
         $(self).val(fdata[self.id]);
@@ -331,6 +328,7 @@ function reloadForm(vid, idid, f) {
 
 function initSaveForm() {
     $('#remove-me-on-load').text('بارگذاری شد.');
+    $('.backback').removeClass('backback');
     var f = null;
     var vid = null;
     var idid = null;
@@ -351,7 +349,6 @@ function initSaveForm() {
         console.log('form not found!!!!');
         return;
     }
-    console.log('init form', vid, idid, f);
 
     function onChange() {
         saveForm(vid, idid, f);
@@ -542,7 +539,7 @@ myApp.onPageInit('index', function (page) {
 Object.keys(Template7.global.formList).forEach(function (a0, a1, a2) {
     Template7.global.formList[a0].forEach(function (formInfo, a4, a5) {
         myApp.onPageInit('form' + formInfo.id, function (page) {
-            setTimeout(initSaveForm, 1000);
+            setTimeout(initSaveForm, WORKAROUND_TIMEOUT);
         });
     });
 });
