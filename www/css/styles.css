@@ -41,3 +41,8 @@
 .prophet {
     z-index: 99999;
 }
+
+
+.backback {
+    display: none;
+}
