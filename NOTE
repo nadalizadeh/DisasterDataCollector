@@ -1,0 +1,3 @@
+In case delete operation is implmented:
+
+form ids must always be incremented,no id must be reused for a new submission.
